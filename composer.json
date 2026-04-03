@@ -1,0 +1,16 @@
+{
+    "name": "filomenajurgaityte/php-site-tom-troc",
+    "autoload": {
+        "psr-4": {
+            "Controllers\\": "src/controllers/",
+            "Models\\": "src/models/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Filomena Jurgaityte",
+            "email": "filomena.jurgaityte@gmail.com"
+        }
+    ],
+    "require": {}
+}

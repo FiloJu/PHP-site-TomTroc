@@ -7,6 +7,7 @@ class Database {
     private static $instance = null;
 
 // Singleton pattern to ensure only one connection is created - one and only one instance of PDO is used throughout the application
+// TODO :Voir pourquoi on ne passe pas dedans
     public static function connect() {
         if (self::$instance === null) {
             self::$instance = new PDO(
@@ -14,6 +15,7 @@ class Database {
                 DB_USER,
                 DB_PASS
             );
+            self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         return self::$instance;
     }

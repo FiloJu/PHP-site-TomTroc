@@ -1,6 +1,8 @@
 <?php
 
-namespace Models;
+namespace Models\Entities;
+
+use PDO;
 class Book
 {
     private int $id;

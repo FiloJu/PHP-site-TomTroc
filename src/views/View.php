@@ -1,8 +1,9 @@
 <?php
 
+namespace Views;
 class View
 {
-    private string $layout = 'app/views/layouts/main.php';
+    private string $layout = '../src/views/layouts/main.php';
 
     public function render(string $template, array $data = []): void
     {
@@ -11,7 +12,7 @@ class View
 
         // Capturer le contenu de la vue
         ob_start();
-        require "app/views/pages/{$template}.php";
+        require "../src/views/pages/{$template}.php";
         $content = ob_get_clean();
 
         // Injecter dans le layout
@@ -21,6 +22,6 @@ class View
     public function partial(string $template, array $data = []): void
     {
         extract($data);
-        require "app/views/partials/{$template}.php";
+        require "../src/views/partials/{$template}.php";
     }
 }

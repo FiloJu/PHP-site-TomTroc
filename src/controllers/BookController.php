@@ -3,6 +3,8 @@
 namespace Controllers;
 
 use Models\Entities\Book;
+use Models\Managers\BookManager;
+use Views\View;
 use PDO;
 
 class BookController
@@ -13,16 +15,18 @@ class BookController
     }
     public function findAll(): void
     {
-        $manager = new \Models\Managers\BookManager();
+        $manager = new BookManager();
         $books = $manager->findAll();
-        require '../src/views/books.php'; 
+        $view = new View();
+        $view->render('books', ['books' => $books]);
     }
 
     public function findOne(int $id)
     {
-        $manager = new \Models\Managers\BookManager();
+        $manager = new BookManager();
         $book = $manager->findOne($id);
-        require '../src/views/book.php';
+        $view = new View();
+        $view->render('book', ['book' => $book]);
     }
 
 }

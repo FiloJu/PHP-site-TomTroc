@@ -28,6 +28,11 @@ try {
             'method' => 'login',
         ]),
         new Route([
+            'action' => 'register',
+            'controller' => AuthController::class,
+            'method' => 'register',
+        ]),
+        new Route([
             'action' => 'books',
             'controller' => BookController::class,
             'method' => 'findAll',

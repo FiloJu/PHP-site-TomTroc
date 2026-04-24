@@ -5,7 +5,8 @@
             "Controllers\\": "src/controllers/",
             "Models\\": "src/models/",
             "Middlewares\\": "src/middlewares/",
-            "App\\": "src/app/"
+            "App\\": "src/app/",
+            "Views\\": "src/views/"
         }
     },
     "authors": [

@@ -3,7 +3,9 @@
     "autoload": {
         "psr-4": {
             "Controllers\\": "src/controllers/",
-            "Models\\": "src/models/"
+            "Models\\": "src/models/",
+            "Middlewares\\": "src/middlewares/",
+            "App\\": "src/app/"
         }
     },
     "authors": [

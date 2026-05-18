@@ -44,13 +44,54 @@ try {
             'parameters' => ['id' => ['format' => '[0-9]+']]
         ]),
         new Route([
-            'action' => 'create-message',
-            'controller' => MessageController::class,
+            'action' => 'create-book',
+            'controller' => BookController::class,
             'method' => 'create',
+            'verb' => 'GET',
+        ]),
+        new Route([
+            'action' => 'create-book',
+            'controller' => BookController::class,
+            'method' => 'create',
+            'verb' => 'POST',
+        ]),
+        new Route([
+            'action' => 'delete-book',
+            'controller' => BookController::class,
+            'method' => 'delete',
+            'verb' => 'POST',
+            'parameters' => ['id' => ['format' => '[0-9]+']],
             'middlewares' => [
                 Authentication::class => 'checkAuth'
             ]
-        ])
+        ]),
+        new Route([
+            'action' => 'messages',
+            'controller' => MessageController::class,
+            'method' => 'create',
+            'verb' => 'GET',
+            'middlewares' => [
+                Authentication::class => 'checkAuth'
+            ]
+        ]),
+        new Route([
+            'action' => 'create-message',
+            'controller' => MessageController::class,
+            'method' => 'create',
+            'verb' => 'GET',
+            'middlewares' => [
+                Authentication::class => 'checkAuth'
+            ]
+        ]),
+        new Route([
+            'action' => 'create-message',
+            'controller' => MessageController::class,
+            'method' => 'create',
+            'verb' => 'POST',
+            'middlewares' => [
+                Authentication::class => 'checkAuth'
+            ]
+        ]),
     ]);
     $router->errorRoutes([
         new Route([

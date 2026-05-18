@@ -1,4 +1,8 @@
-<h1>Books</h1>
+<h1>Livres</h1>
+<a href="index.php?action=create-book">
+    + Ajouter un livre
+</a>
+
 <ul>
     <?php foreach ($books as $book): ?>
         <li>

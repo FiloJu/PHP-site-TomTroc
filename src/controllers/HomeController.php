@@ -7,7 +7,7 @@ use Views\View;
 class HomeController {
     public function index() {
         $logged_in = $_SESSION['auth'] ?? false;
-        $view = new View();
+        $view = new View('Accueil');
         $view->render('home', ['logged_in' => $logged_in]);
     }
 }

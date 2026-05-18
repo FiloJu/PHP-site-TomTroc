@@ -43,14 +43,15 @@ class Router
 
     private function parametersMatch(array $parameters)
     {
+        $source = $_SERVER['REQUEST_METHOD'] === 'POST' ? $_POST : $_GET;
         foreach ($parameters as $parameter => $constraints) {
             if (is_string($constraints)) {
                 $parameter = $constraints;
             }
-            if ($this->parameterIsRequired($constraints) and empty($_GET[$parameter])) {
+            if ($this->parameterIsRequired($constraints) and empty($source[$parameter])) {
                 return false;
             }
-            if (!$this->parameterHasGoodFormat($parameter, $constraints)) {
+            if (!$this->parameterHasGoodFormat($parameter, $constraints, $source)) {
                 return false;
             }
         }
@@ -71,11 +72,12 @@ class Router
         }
         $controller = new $controller();
         
-        // Extraire les paramètres de la requête GET
+        // Extraire les paramètres de la requête (GET ou POST selon la méthode HTTP)
         $requestParams = [];
+        $source = $_SERVER['REQUEST_METHOD'] === 'POST' ? $_POST : $_GET;
         foreach ($parameters as $param => $constraints) {
             if (is_string($param)) {
-                $requestParams[$param] = $_GET[$param] ?? null;
+                $requestParams[$param] = $source[$param] ?? null;
             }
         }
         
@@ -101,10 +103,13 @@ class Router
         return !isset($constraints['required']) || $constraints['required'];
     }
 
-    private function parameterHasGoodFormat(string $parameter, array|string $constraints): bool
+    private function parameterHasGoodFormat(string $parameter, array|string $constraints, array $source = []): bool
     {
-        if (is_array($constraints) and isset($constraints['format']) and !empty($_GET[$parameter])) {
-            return preg_match('/^' . $constraints['format'] . '$/', $_GET[$parameter]);
+        if (empty($source)) {
+            $source = $_GET;
+        }
+        if (is_array($constraints) and isset($constraints['format']) and !empty($source[$parameter])) {
+            return preg_match('/^' . $constraints['format'] . '$/', $source[$parameter]);
         }
         return true;
     }

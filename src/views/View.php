@@ -5,6 +5,20 @@ class View
 {
     private string $layout = '../src/views/layouts/main.php';
 
+    /**
+     * Le titre de la page.
+     */
+    private string $title;
+
+
+    /**
+     * Constructeur.
+     */
+    public function __construct($title)
+    {
+        $this->title = $title;
+    }
+
     public function render(string $template, array $data = []): void
     {
         // Rendre les données disponibles dans la vue

@@ -1,40 +1,44 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
-    <div class="container-fluid">
-        <!-- Brand -->
-        <a class="navbar-brand d-flex align-items-center gap-2" href="/?action=">
-            <img src="/img/logo.png" alt="Logo Tom Troc" height="40">
-            <span class="fw-bold fs-5">Tom Troc</span>
-        </a>
-        
-        <!-- Toggle Button -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <!-- Navbar Menu -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <!-- Left Menu -->
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/?action=">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/?action=books">Nos livres à l'échange</a>
-                </li>
-            </ul>
-            
-            <!-- Right Menu -->
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/?action=messages">Messagerie</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/?action=account">Mon compte</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/?action=login">Connexion</a>
-                </li>
-            </ul>
+<?php require_once __DIR__ . '/../../services/Utils.php'; ?>
+<header class="site-header">
+    <div class="header-inner">
+        <nav class="nav">
+            <div class="nav-left">
+                <a href="index.php" class="logo">
+                    <img src="img/min/logo.svg" alt="Logo">
+                </a>
+                <a href="index.php">Accueil</a>
+                <a href="index.php?action=books">Nos livres à l’échange</a>
+            </div>
+
+                <?php if (Utils::isUserConnected()): ?>
+                    <img src="img/min/Line.svg" alt="séparateur" class="separator">
+                    <div class="nav-right">
+                        <div class="nav-item">
+                            <img src="img/min/icon_messagerie.svg" alt="icon">
+                            <a href="index.php?action=messages">Messagerie</a>
+
+                            <?php
+                            $unreadCount = $_SESSION['unread_count'] ?? 0;
+                            // On vérifie si la session contient un chiffre > 0
+                            if ($unreadCount > 0): ?>
+                                <div class="badge-wrapper">
+                                    <span class="badge-number"><?= htmlspecialchars($unreadCount) ?></span>
+                                </div>
+                            <?php endif; ?>
+
+                        </div>
+
+                        <div class="nav-item">
+                            <img src="img/min/icon_mon_compte.svg" alt="Logo mon compte">
+                            <a href="index.php?action=profile">Mon compte</a>
+                        </div>
+                        <a href="index.php?action=logout" class="connexion">Déconnexion</a>
+                    </div>
+                <?php else: ?>
+                    <div class="nav-right push-right">
+                        <a href="index.php?action=login" class="connexion">Connexion</a>
+                    </div>
+                <?php endif; ?>
+            </nav>
         </div>
-    </div>
-</nav>
+    </header>

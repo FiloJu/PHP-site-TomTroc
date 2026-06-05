@@ -3,9 +3,8 @@
 namespace Models\Entities;
 
 use PDO;
-class Book
+class Book extends AbstractEntity
 {
-    private int $id;
     private int $user_id;
     private string $title;
     private string $author;
@@ -13,19 +12,15 @@ class Book
     private ?string $description;
     private bool $is_available;
 
-    public function __construct(int $id, int $user_id, string $title, string $author, ?string $image, ?string $description, bool $is_available)
+    public function __construct(array $data)
     {
-        $this->id = $id;
-        $this->user_id = $user_id;
-        $this->title = $title;
-        $this->author = $author;
-        $this->image = $image;
-        $this->description = $description;
-        $this->is_available = $is_available;
-    }
-    public function getId(): int
-    {
-        return $this->id;
+        parent::__construct($data);
+        $this->user_id = $data['user_id'];
+        $this->title = $data['title'];
+        $this->author = $data['author'];
+        $this->image = $data['image'] ?? null;
+        $this->description = $data['description'] ?? null;
+        $this->is_available = (bool)$data['is_available'];
     }
     public function getUserId(): int
     {
@@ -51,5 +46,28 @@ class Book
     {
         return $this->is_available;
     }
+    public function setUserId(int $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+    public function setAuthor(string $author): void
+    {
+        $this->author = $author;
+    }
+    public function setImage(?string $image): void
+    {
+        $this->image = $image;
+    }
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+    public function setIsAvailable(bool $is_available): void
+    {
+        $this->is_available = $is_available;
+    }
 }
-

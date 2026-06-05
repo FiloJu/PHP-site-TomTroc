@@ -3,27 +3,41 @@
 namespace Models\Entities;
 
 use DateTime;
-class User
+class User extends AbstractEntity
 {
-    private int $id;
     private string $username;
     private string $email;
     private string $password;
     private ?string $avatar;
     private DateTime $created_at;
-
-    public function __construct(int $id, string $username, string $email, string $password, ?string $avatar, DateTime $created_at)
+    public function setUsername(string $username): void
     {
-        $this->id = $id;
         $this->username = $username;
-        $this->email = $email;
-        $this->password = $password;
-        $this->avatar = $avatar;
-        $this->created_at = $created_at;
     }
-    public function getId(): int
+    public function setEmail(string $email): void
     {
-        return $this->id;
+        $this->email = $email;
+    }
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+    public function setAvatar(?string $avatar): void
+    {
+        $this->avatar = $avatar;
+    }
+    public function setCreatedAt($created_at): void
+    {
+        if (is_string($created_at)) {
+            $this->created_at = new DateTime($created_at);
+            return;
+        }
+        if ($created_at instanceof DateTime) {
+            $this->created_at = $created_at;
+            return;
+        }
+        // Fallback to now if unexpected type
+        $this->created_at = new DateTime();
     }
     public function getUsername(): string
     {

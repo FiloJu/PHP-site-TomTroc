@@ -3,52 +3,30 @@
 namespace Models\Managers;
 use PDO;
 use Models\Entities\Book;
-use Models\Database;
 
 // TODO: Requetes SQL pour CRUD ici 
-class BookManager
+class BookManager extends AbstractEntityManager
 {
-    private PDO $db;
     private string $table = "books";
-
-    public function __construct()
-    {
-        $this->db = Database::connect();
-    }
 
     public function findAll(): array
     {
         $stmt = $this->db->query("SELECT * FROM {$this->table}");
-        $booksData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $booksData = $stmt->fetchAll();
         $books = [];
         foreach ($booksData as $bookData) {
-            $books[] = new Book(
-                $bookData['id'],
-                $bookData['user_id'],
-                $bookData['title'],
-                $bookData['author'],
-                $bookData['image'],
-                $bookData['description'],
-                $bookData['is_available']
-            );
+            $books[] = new Book($bookData);
         }
         return $books;
     }
+    //TODO : pas besoin si on affiche tous les livres avec le badge non dispo ?
     public function findAllAvailable(): array
     {
         $stmt = $this->db->query("SELECT * FROM {$this->table} WHERE is_available = 1");
-        $booksData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $booksData = $stmt->fetchAll();
         $books = [];
         foreach ($booksData as $bookData) {
-            $books[] = new Book(
-                $bookData['id'],
-                $bookData['user_id'],
-                $bookData['title'],
-                $bookData['author'],
-                $bookData['image'],
-                $bookData['description'],
-                $bookData['is_available']
-            );
+            $books[] = new Book($bookData);
         }
         return $books;
     }
@@ -59,15 +37,7 @@ class BookManager
         $booksData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $books = [];
         foreach ($booksData as $bookData) {
-            $books[] = new Book(
-                $bookData['id'],
-                $bookData['user_id'],
-                $bookData['title'],
-                $bookData['author'],
-                $bookData['image'],
-                $bookData['description'],
-                $bookData['is_available']
-            );
+            $books[] = new Book($bookData);
         }
         return $books;
     }
@@ -78,15 +48,7 @@ class BookManager
         $booksData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $books = [];
         foreach ($booksData as $bookData) {
-            $books[] = new Book(
-                $bookData['id'],
-                $bookData['user_id'],
-                $bookData['title'],
-                $bookData['author'],
-                $bookData['image'],
-                $bookData['description'],
-                $bookData['is_available']
-            );
+            $books[] = new Book($bookData);
         }
         return $books;
     }
@@ -96,15 +58,7 @@ class BookManager
         $stmt->execute(['id' => $id]);
         $bookData = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($bookData) {
-            return new Book(
-                $bookData['id'],
-                $bookData['user_id'],
-                $bookData['title'],
-                $bookData['author'],
-                $bookData['image'],
-                $bookData['description'],
-                $bookData['is_available']
-            );
+            return new Book($bookData);
         }
         return null;
     }

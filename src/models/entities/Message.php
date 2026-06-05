@@ -3,27 +3,13 @@
 namespace Models\Entities;
 
 use DateTime;
-class Message
+class Message extends AbstractEntity
 {
-    private int $id;
     private int $sender_id;
     private int $receiver_id;
     private string $content;
     private bool $is_read;
     private DateTime $created_at;
-    public function __construct(int $id, int $sender_id, int $receiver_id, string $content, bool $is_read, DateTime $created_at)
-    {
-        $this->id = $id;
-        $this->sender_id = $sender_id;
-        $this->receiver_id = $receiver_id;
-        $this->content = $content;
-        $this->is_read = $is_read;
-        $this->created_at = $created_at;
-    }
-    public function getId(): int
-    {
-        return $this->id;
-    }
     public function getSenderId(): int
     {
         return $this->sender_id;
@@ -43,6 +29,26 @@ class Message
     public function getCreatedAt(): DateTime
     {
         return $this->created_at;
+    }
+    public function setSenderId(int $sender_id): void
+    {
+        $this->sender_id = $sender_id;
+    }
+    public function setReceiverId(int $receiver_id): void
+    {
+        $this->receiver_id = $receiver_id;
+    }
+    public function setContent(string $content): void
+    {
+        $this->content = $content;
+    }
+    public function setIsRead(bool $is_read): void
+    {
+        $this->is_read = $is_read;
+    }
+    public function setCreatedAt(DateTime $created_at): void
+    {
+        $this->created_at = $created_at;
     }
 
 }

@@ -23,6 +23,18 @@ try {
             'method' => 'index',
         ]),
         new Route([
+            'action' => 'createUser',
+            'controller' => AuthController::class,
+            'method' => 'createUser',
+            'verb' => 'POST',
+        ]),
+        new Route([
+            'action' => 'login',
+            'controller' => AuthController::class,
+            'method' => 'verifyLogin',
+            'verb' => 'POST',
+        ]),
+        new Route([
             'action' => 'login',
             'controller' => AuthController::class,
             'method' => 'login',
@@ -31,6 +43,11 @@ try {
             'action' => 'register',
             'controller' => AuthController::class,
             'method' => 'register',
+        ]),
+        new Route([
+            'action' => 'logout',
+            'controller' => AuthController::class,
+            'method' => 'logout',
         ]),
         new Route([
             'action' => 'books',
@@ -68,7 +85,7 @@ try {
         new Route([
             'action' => 'messages',
             'controller' => MessageController::class,
-            'method' => 'create',
+            'method' => 'index',
             'verb' => 'GET',
             'middlewares' => [
                 Authentication::class => 'checkAuth'

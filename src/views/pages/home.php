@@ -33,7 +33,12 @@
                     <div class="book-details">
                         <h3 class="book-title"><?= htmlspecialchars($book->getTitle()) ?></h3>
                         <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
-                        <p class="book-seller">Vendu par : <?= htmlspecialchars($book->getSeller() ?? 'Inconnu') ?></p>
+                        <?php
+                            $userManager = new \Models\Managers\UserManager();
+                            $seller = $userManager->findById($book->getUserId());
+                            $sellerName = $seller ? $seller->getUsername() : 'Inconnu';
+                        ?>
+                        <p class="book-seller">Vendu par : <?= htmlspecialchars($sellerName) ?></p>
                     </div>
                 </a>
             <?php endforeach; ?>

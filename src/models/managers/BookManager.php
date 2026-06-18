@@ -101,5 +101,17 @@ class BookManager extends AbstractEntityManager
         $stmt = $this->db->prepare("DELETE FROM {$this->table} WHERE id = :id");
         $stmt->execute(['id' => $id]);
     }
+
+    public function findLatest(int $limit = 6): array
+    {
+        $limit = (int) $limit;
+        $stmt = $this->db->query("SELECT * FROM {$this->table} ORDER BY id DESC LIMIT {$limit}");
+        $booksData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $books = [];
+        foreach ($booksData as $bookData) {
+            $books[] = new Book($bookData);
+        }
+        return $books;
+    }
 }
 

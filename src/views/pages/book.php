@@ -21,10 +21,12 @@
                 <div class="section-owner">Propriétaire</div>
                 <div class="owner-card">
                     <div class="avatar-wrapper">
-                        <img src="img/avatars/avatar.png" alt="Avatar propriétaire" class="owner-avatar-img">
+                        <img src="img/avatars/Avatar_default.png" alt="Avatar propriétaire" class="owner-avatar-img">
                     </div>
                     <div class="owner-name-container">
-                        <span><?= htmlspecialchars($owner?->getUsername() ?? 'Utilisateur inconnu') ?></span>
+                        <a href="index.php?action=publicProfile&id=<?= htmlspecialchars($owner?->getId()) ?>">
+                            <span><?= htmlspecialchars($owner?->getUsername() ?? 'Utilisateur inconnu') ?></span>
+                        </a>
                     </div>
                 </div>
 

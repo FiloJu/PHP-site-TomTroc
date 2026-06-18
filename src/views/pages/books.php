@@ -22,7 +22,7 @@
                     <div class="book-info">
                         <h3 class="book-title"><?= htmlspecialchars($book->getTitle()) ?></h3>
                         <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
-                        <p class="book-seller">Vendu par : <?= htmlspecialchars($users[$book->getUserId()]?->getUsername() ?? 'Utilisateur inconnu') ?></p>
+                        <p class="book-seller">Vendu par : <a href="index.php?action=publicProfile&id=<?= $book->getUserId() ?>"><?= htmlspecialchars($users[$book->getUserId()]?->getUsername() ?? 'Utilisateur inconnu') ?></a></p>
                     </div>
                 </a>
             <?php endforeach; ?>

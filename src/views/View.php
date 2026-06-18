@@ -24,6 +24,9 @@ class View
         // Rendre les données disponibles dans la vue
         extract($data);
 
+        // Charger les utilitaires partagés avant de rendre la vue
+        require_once __DIR__ . '/../services/Utils.php';
+
         // Capturer le contenu de la vue
         ob_start();
         require "../src/views/pages/{$template}.php";

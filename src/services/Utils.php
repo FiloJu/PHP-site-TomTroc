@@ -21,23 +21,27 @@ class Utils
     }
 
     //date avec calcul ancienneté (1mois, 6jours, ...)
-    public static function format(?string $dateString): string
+    public static function format($date): string
     {
-        //si pas de date
-        if ($dateString === null) {
+        if ($date === null) {
             return "";
         }
-        $date = new DateTime($dateString);
-        $now = new datetime();
-        //calcul de la diff
-        $interval = $now->diff($date);
-        if ($interval->y >= 1) {
-            //si plus d'1 an on affiche les années
-            return $interval->y . 'an' . ($interval->y < 1 ? 's' : '');
-        } elseif ($interval->m >= 1) {
-            return $interval->m . 'mois';
+
+        if ($date instanceof DateTime) {
+            $dateTime = $date;
         } else {
-            return "moins d'1 mois";
+            $dateTime = new DateTime($date);
         }
+
+        $now = new DateTime();
+        $interval = $now->diff($dateTime);
+
+        if ($interval->y >= 1) {
+            return $interval->y . ' an' . ($interval->y > 1 ? 's' : '');
+        } elseif ($interval->m >= 1) {
+            return $interval->m . ' mois';
+        }
+
+        return "moins d'1 mois";
     }
 }

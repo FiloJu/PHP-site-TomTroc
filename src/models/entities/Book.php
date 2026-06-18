@@ -66,8 +66,8 @@ class Book extends AbstractEntity
     {
         $this->description = $description;
     }
-    public function setIsAvailable(bool $is_available): void
+    public function setIsAvailable(?bool $is_available): void
     {
-        $this->is_available = $is_available;
+        $this->is_available = (bool) $is_available;
     }
 }

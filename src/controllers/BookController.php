@@ -84,6 +84,64 @@ class BookController
         $view->render('createBook');
     }
 
+    public function edit(int $id): void
+    {
+        $manager = new BookManager();
+        $book = $manager->findOne($id);
+
+        if (!$book) {
+            header('Location: index.php?action=books');
+            exit;
+        }
+
+        if ($book->getUserId() !== ($_SESSION['user_id'] ?? null)) {
+            header('Location: index.php?action=books');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $title = trim($_POST['title'] ?? '');
+            $author = trim($_POST['author'] ?? '');
+            $description = trim($_POST['description'] ?? '');
+            $available = $_POST['available'] ?? '1';
+            $image = $book->getImage();
+
+            if (!empty($_FILES['image_file']['tmp_name']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
+                $tmpFile = $_FILES['image_file']['tmp_name'];
+                $originalName = $_FILES['image_file']['name'];
+                $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+                $allowed = ['jpg', 'jpeg', 'png'];
+                if (in_array($extension, $allowed, true)) {
+                    $imageName = sprintf('book_%d_%s.%s', $id, uniqid(), $extension);
+                    $destination = __DIR__ . '/../../public/img/books/' . $imageName;
+                    if (!is_dir(dirname($destination))) {
+                        mkdir(dirname($destination), 0755, true);
+                    }
+                    move_uploaded_file($tmpFile, $destination);
+                    $image = $imageName;
+                }
+            }
+
+            if (empty($title) || empty($author)) {
+                throw new Exception("Title and author are required", 400);
+            }
+
+            $manager->update($id, [
+                'title' => $title,
+                'author' => $author,
+                'image' => $image === '' ? null : $image,
+                'description' => $description === '' ? null : $description,
+                'is_available' => (int) ($available === '1' || $available === 'disponible'),
+            ]);
+
+            header("Location: index.php?action=book&id={$id}");
+            exit;
+        }
+
+        $view = new View("Modifier le livre");
+        $view->render('updateBook', ['book' => $book]);
+    }
+
     public function delete(int $id): void
     {
         // Check if user is logged in

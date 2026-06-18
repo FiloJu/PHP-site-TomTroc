@@ -4,7 +4,6 @@ namespace Models\Managers;
 use PDO;
 use Models\Entities\Book;
 
-// TODO: Requetes SQL pour CRUD ici 
 class BookManager extends AbstractEntityManager
 {
     private string $table = "books";
@@ -102,7 +101,7 @@ class BookManager extends AbstractEntityManager
         $stmt->execute(['id' => $id]);
     }
 
-    public function findLatest(int $limit = 6): array
+    public function findLatest(int $limit = 4): array
     {
         $limit = (int) $limit;
         $stmt = $this->db->query("SELECT * FROM {$this->table} ORDER BY id DESC LIMIT {$limit}");

@@ -43,6 +43,7 @@ class User extends AbstractEntity
     {
         return $this->username;
     }
+
     public function getEmail(): string
     {
         return $this->email;

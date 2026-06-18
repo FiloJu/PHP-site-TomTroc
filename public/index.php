@@ -7,6 +7,7 @@ use App\Router;
 use Controllers\HomeController;
 use Controllers\BookController;
 use Controllers\MessageController;
+use Controllers\UserController;
 use Controllers\AuthController;
 use Controllers\ErrorsController;
 use Middlewares\Authentication;
@@ -73,6 +74,26 @@ try {
             'verb' => 'POST',
         ]),
         new Route([
+            'action' => 'editBook',
+            'controller' => BookController::class,
+            'method' => 'edit',
+            'verb' => 'GET',
+            'parameters' => ['id' => ['format' => '[0-9]+']],
+            'middlewares' => [
+                Authentication::class => 'checkAuth'
+            ]
+        ]),
+        new Route([
+            'action' => 'editBook',
+            'controller' => BookController::class,
+            'method' => 'edit',
+            'verb' => 'POST',
+            'parameters' => ['id' => ['format' => '[0-9]+']],
+            'middlewares' => [
+                Authentication::class => 'checkAuth'
+            ]
+        ]),
+        new Route([
             'action' => 'delete-book',
             'controller' => BookController::class,
             'method' => 'delete',
@@ -99,6 +120,31 @@ try {
             'middlewares' => [
                 Authentication::class => 'checkAuth'
             ]
+        ]),
+        new Route([
+            'action' => 'profile',
+            'controller' => UserController::class,
+            'method' => 'index',
+            'verb' => 'GET',
+            'middlewares' => [
+                Authentication::class => 'checkAuth'
+            ]
+        ]),
+        new Route([
+            'action' => 'updateProfile',
+            'controller' => UserController::class,
+            'method' => 'updateProfile',
+            'verb' => 'POST',
+            'middlewares' => [
+                Authentication::class => 'checkAuth'
+            ]
+        ]),
+        new Route([
+            'action' => 'publicProfile',
+            'controller' => UserController::class,
+            'method' => 'publicProfile',
+            'verb' => 'GET',
+            'parameters' => ['id' => ['format' => '[0-9]+']]
         ]),
         new Route([
             'action' => 'create-message',

@@ -41,4 +41,35 @@ class UserManager extends AbstractEntityManager
         return (int)$this->db->lastInsertId();
     }
 
+    public function update(int $id, array $data): void
+    {
+        $fields = [];
+        $params = ['id' => $id];
+
+        if (isset($data['username'])) {
+            $fields[] = 'username = :username';
+            $params['username'] = $data['username'];
+        }
+        if (isset($data['email'])) {
+            $fields[] = 'email = :email';
+            $params['email'] = $data['email'];
+        }
+        if (isset($data['password'])) {
+            $fields[] = 'password = :password';
+            $params['password'] = $data['password'];
+        }
+        if (isset($data['avatar'])) {
+            $fields[] = 'avatar = :avatar';
+            $params['avatar'] = $data['avatar'];
+        }
+
+        if (empty($fields)) {
+            return;
+        }
+
+        $sql = "UPDATE {$this->table} SET " . implode(', ', $fields) . " WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+    }
+
 }

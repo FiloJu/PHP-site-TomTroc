@@ -43,7 +43,8 @@ class Router
 
     private function parametersMatch(array $parameters)
     {
-        $source = $_SERVER['REQUEST_METHOD'] === 'POST' ? $_POST : $_GET;
+        // Merge GET and POST so query parameters (like id) are available on POST requests
+        $source = array_merge($_GET, $_POST);
         foreach ($parameters as $parameter => $constraints) {
             if (is_string($constraints)) {
                 $parameter = $constraints;
@@ -74,7 +75,8 @@ class Router
         
         // Extraire les paramètres de la requête (GET ou POST selon la méthode HTTP)
         $requestParams = [];
-        $source = $_SERVER['REQUEST_METHOD'] === 'POST' ? $_POST : $_GET;
+        // Ensure parameters are read from both GET and POST (query string preserved)
+        $source = array_merge($_GET, $_POST);
         foreach ($parameters as $param => $constraints) {
             if (is_string($param)) {
                 $requestParams[$param] = $source[$param] ?? null;

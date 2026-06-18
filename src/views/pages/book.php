@@ -1,7 +1,7 @@
 <section class="book-page-wrapper">
     <?php if ($book): ?>
         <div class="chemin-navigation">
-                <a href="index.php?action=books">Nos livres à l'échange</a>
+            <a href="index.php?action=books">Nos livres à l'échange</a>
             <span><?= htmlspecialchars($book->getTitle()) ?></span>
         </div>
 
@@ -30,16 +30,20 @@
                     </div>
                 </div>
 
-                <?php if (isset($currentUserId) && $currentUserId === $book->getUserId()): ?>
-                    <form method="POST" action="index.php?action=delete-book" style="display:inline;">
-                        <input type="hidden" name="id" value="<?= htmlspecialchars($book->getId()) ?>">
-                        <button type="submit" class="btn-outline" onclick="return confirm('Etes-vous sûr de vouloir supprimer ce livre?')">Supprimer ce livre</button>
-                    </form>
-                <?php endif; ?>
-
-                <?php if ($owner && (!isset($currentUserId) || $currentUserId !== $book->getUserId())): ?>
-                    <a href="index.php?action=create-message&receiver_id=<?= htmlspecialchars($owner->getId()) ?>" class="btn">Envoyer un message</a>
-                <?php endif; ?>
+                <div class="action-wrapper">
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <?php if ($_SESSION['user_id'] != $book->getUserId()): ?>
+                            <a href="index.php?action=messagerie&create_chat_with=<?= $book->getUserId() ?>"
+                                class="btn-send-message">
+                                Envoyer un message
+                            </a>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <a href="index.php?action=login" class="btn-send-message">
+                            Envoyer un message
+                        </a>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     <?php else: ?>

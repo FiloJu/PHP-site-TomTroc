@@ -123,7 +123,13 @@ class BookController
             }
 
             if (empty($title) || empty($author)) {
-                throw new Exception("Title and author are required", 400);
+                // Avoid throwing a generic exception which bubbles to a 400 route.
+                // Show a friendly error and redirect back to the edit form.
+                $_SESSION['flash_error'] = "Le titre et l'auteur sont requis.";
+                // preserve submitted values so the user doesn't lose work
+                $_SESSION['old_inputs'] = ['title' => $title, 'author' => $author, 'description' => $description, 'available' => $available];
+                header("Location: index.php?action=editBook&id={$id}");
+                exit;
             }
 
             $manager->update($id, [

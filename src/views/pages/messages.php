@@ -1,39 +1,99 @@
-<section class="messages-page-wrapper">
-    <div class="messages-page-container">
-        <div class="messages-header">
-            <h1>Messagerie</h1>
-            <p>Bienvenue dans votre espace de messagerie. Consultez vos conversations et envoyez de nouveaux messages.</p>
+<main class="messagerie-page-wrapper">
+    <div class="messagerie-container">
+
+        <div class="messagerie-sidebar">
+            <h1 class="messagerie-title">Messagerie</h1>
+
+            <div class="conversation-list">
+                <?php foreach ($conversations as $conversation): ?>
+                    <?php
+                    //si 'last_message' est vide ou nul, on saute cette itération
+                    if (empty($conversation['last_message'])) {
+                        continue;
+                    }
+                    ?>
+                    <a href="index.php?action=messagerie&id=<?= $conversation['id'] ?>"
+                        class="conversation-item <?= ($selectedConversationId == $conversation['id']) ? 'active' : '' ?>">
+
+                        <div class="conv-avatar">
+                            <img src="img/avatars/<?= htmlspecialchars($conversation['other_avatar'] ?? 'Avatar_default.png') ?>" alt="Avatar">
+                        </div>
+
+                        <div class="conv-info">
+                            <div class="conv-header">
+                                <span class="conv-pseudo"><?= htmlspecialchars($conversation['other_pseudo']) ?></span>
+                                <?php
+                                // On affiche le point SI le dernier message n'est pas lu 
+                                // ET SI ce n'est pas NOUS qui l'avons envoyé
+                                if ($conversation['last_message_read'] == 0 && $conversation['last_message_sender_id'] != $_SESSION['user_id']): ?>
+                                    <span class="unread-dot"></span>
+                                <?php endif; ?>
+                                <span class="conv-time"><?= date('H.i', strtotime($conversation['last_message_date'] ?? 'now')) ?> </span>
+                            </div>
+                            <p class="conv-preview"><?= htmlspecialchars($conversation['last_message'] ?? 'Nouvelle conversation') ?></p>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+
+                <?php if (empty($conversations)): ?>
+                    <p class="empty-msg">Aucune conversation pour le moment.</p>
+                <?php endif; ?>
+            </div>
         </div>
 
-        <?php if (!empty($conversations) && is_array($conversations)): ?>
-            <div class="conversations-list">
-                <?php foreach ($conversations as $senderId => $conv): ?>
-                    <div class="conversation-card">
-                        <a href="index.php?action=messages&sender_id=<?= htmlspecialchars($senderId) ?>">
-                            <div class="conversation-header">
-                                <strong><?= htmlspecialchars($conv['sender_username'] ?? 'Utilisateur') ?></strong>
-                                <span class="conversation-meta"><?= count($conv['messages']) ?> message(s)</span>
-                            </div>
-                            <?php if (!empty($conv['messages'])): ?>
-                                <?php $last = $conv['messages'][0]; ?>
-                                <div class="conversation-last">
-                                    <p><?= htmlspecialchars(mb_strimwidth($last['content'], 0, 100, '...')) ?></p>
-                                    <time><?= htmlspecialchars($last['created_at']) ?></time>
-                                </div>
-                            <?php endif; ?>
-                        </a>
+        <section class="messagerie-main">
+            <?php if (isset($selectedConversationId) && $selectedConversationId && !empty($conversations)): ?>
+
+                <div class="chat-header">
+                    <div class="chat-header-avatar">
+                        <img src="img/avatars/<?= htmlspecialchars($otherUserAvatar ?? 'Avatar_default.png') ?>" alt="Avatar">
                     </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="messages-actions">
-                <a href="index.php?action=create-message" class="button">Nouveau message</a>
-            </div>
-        <?php else: ?>
-            <div class="messages-empty-state">
-                <p>Vous n'avez pas encore de messages.</p>
-                <a href="index.php?action=create-message" class="button">Nouveau message</a>
-            </div>
-        <?php endif; ?>
+                    <h2 class="chat-header-pseudo"><?= htmlspecialchars($otherUserPseudo ?? 'Utilisateur') ?></h2>
+                </div>
+
+                <div class="chat-messages-area">
+                    <?php if (empty($messages)): ?>
+                        <p class="mess-int">Dites bonjour !</p>
+                    <?php else: ?>
+                        <?php foreach ($messages as $msg): ?>
+                            <?php
+                            // On vérifie si le message a été envoyé par "Moi" ou par "L'autre"
+                            $isMe = ((int)$msg['sender_id'] === (int)($_SESSION['user_id'] ?? 0));
+                            $classMessage = $isMe ? 'msg-sent' : 'msg-received';
+                            ?>
+
+                            <div class="message-row <?= $classMessage ?>">
+
+                                <?php if (!$isMe): ?>
+                                    <img src="img/avatars/<?= htmlspecialchars($otherUserAvatar ?? 'Avatar_default.png') ?>" alt="Avatar" class="msg-avatar-small">
+                                <?php endif; ?>
+
+                                <div class="msg-content-wrapper">
+                                    <div class="msg-meta">
+                                        <span class="msg-date"><?= date('d.m', strtotime($msg['created_at'] ?? 'now')) ?></span>
+                                        <span class="msg-time"><?= date('H:i', strtotime($msg['created_at'] ?? 'now')) ?></span>
+                                    </div>
+                                    <div class="msg-bubble">
+                                        <p><?= htmlspecialchars($msg['content'] ?? '') ?></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+
+                <div class="chat-input-wrapper">
+                    <form action="index.php?action=create-message" method="POST" class="chat-form">
+                        <input type="hidden" name="receiver_id" value="<?= htmlspecialchars($otherUserId ?? '') ?>">
+                        <label for="chat-input" class="visually-hidden">Tapez votre message ici</label>
+                        <input type="text" name="content" id="chat-input" class="chat-input-field" placeholder="Tapez votre message ici" required>
+                        <button type="submit" class="btn-send-chat">Envoyer</button>
+                    </form>
+                </div>
+            <?php endif; ?>
+
+        </section>
 
     </div>
-</section>
+</main>

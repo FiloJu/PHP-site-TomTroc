@@ -18,23 +18,36 @@ class MessageController
 
         $manager = new MessageManager();
 
-        // Si on a demandé une conversation spécifique via sender_id
-        $senderId = isset($_GET['sender_id']) ? (int)$_GET['sender_id'] : null;
-        if ($senderId) {
-            $data = $manager->findConversationBetween((int)$userId, $senderId);
-            $view = new View('Conversation');
-            $view->render('conversation', [
-                'other_user' => $data['other_user'],
-                'messages' => $data['messages'],
-                'current_user_id' => (int)$userId,
-            ]);
-            return;
+        $otherUserId = null;
+        if (isset($_GET['sender_id'])) {
+            $otherUserId = (int)$_GET['sender_id'];
+        } elseif (isset($_GET['id'])) {
+            $otherUserId = (int)$_GET['id'];
         }
 
         $conversations = $manager->findConversationsByReceiver((int)$userId);
+        $selectedConversationId = null;
+        $messages = [];
+        $otherUserPseudo = null;
+        $otherUserAvatar = null;
+
+        if ($otherUserId) {
+            $data = $manager->findConversationBetween((int)$userId, $otherUserId);
+            $selectedConversationId = $otherUserId;
+            $messages = $data['messages'];
+            $otherUserPseudo = $data['other_user']['username'] ?? 'Utilisateur';
+            $otherUserAvatar = $data['other_user']['avatar'] ?? 'Avatar_default.png';
+        }
 
         $view = new View('Messages');
-        $view->render('messages', ['conversations' => $conversations]);
+        $view->render('messages', [
+            'conversations' => $conversations,
+            'selectedConversationId' => $selectedConversationId,
+            'messages' => $messages,
+            'otherUserId' => $otherUserId,
+            'otherUserPseudo' => $otherUserPseudo,
+            'otherUserAvatar' => $otherUserAvatar,
+        ]);
     }
 
     public function create(array $data = []): void
@@ -60,7 +73,7 @@ class MessageController
                 'is_read' => 0,
             ]);
 
-            header('Location: index.php?action=messages');
+            header('Location: index.php?action=messagerie&id=' . $receiverId);
             exit;
         }
 

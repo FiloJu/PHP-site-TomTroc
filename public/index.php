@@ -92,6 +92,15 @@ try {
             ]
         ]),
         new Route([
+            'action' => 'messagerie',
+            'controller' => MessageController::class,
+            'method' => 'index',
+            'verb' => 'GET',
+            'middlewares' => [
+                Authentication::class => 'checkAuth'
+            ]
+        ]),
+        new Route([
             'action' => 'create-message',
             'controller' => MessageController::class,
             'method' => 'create',

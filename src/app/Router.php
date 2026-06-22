@@ -3,6 +3,7 @@
 namespace App;
 
 use InvalidArgumentException;
+
 class Router
 {
     private array $routes = [];
@@ -72,7 +73,7 @@ class Router
             throw new InvalidArgumentException('Impossible d\'appeler la méthode du contrôleur');
         }
         $controller = new $controller();
-        
+
         // Extraire les paramètres de la requête (GET ou POST selon la méthode HTTP)
         $requestParams = [];
         // Ensure parameters are read from both GET and POST (query string preserved)
@@ -82,7 +83,7 @@ class Router
                 $requestParams[$param] = $source[$param] ?? null;
             }
         }
-        
+
         // Appeler la méthode avec les paramètres si nécessaire
         if (!empty($requestParams)) {
             $controller->$method(...array_values($requestParams));

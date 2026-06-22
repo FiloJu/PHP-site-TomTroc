@@ -6,7 +6,8 @@
             "Models\\": "src/models/",
             "Middlewares\\": "src/middlewares/",
             "App\\": "src/app/",
-            "Views\\": "src/views/"
+            "Views\\": "src/views/",
+            "Services\\":"src/services"
         }
     },
     "authors": [
@@ -15,5 +16,7 @@
             "email": "filomena.jurgaityte@gmail.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^4.0"
+    }
 }

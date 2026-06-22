@@ -1,6 +1,7 @@
 <?php
 
 namespace Models\Managers;
+
 use DateTime;
 use Models\Database;
 use Models\Entities\AbstractEntity;
@@ -15,11 +16,11 @@ abstract class AbstractEntityManager
     {
         $this->db = Database::connect();
     }
-    
+
     public function update(AbstractEntity $entity): int
     {
         $reflection = new ReflectionClass($entity);
-        $params=[];
+        $params = [];
         $sql = "UPDATE {$this->table} SET ";
         foreach ($reflection->getProperties() as $property) {
             $propertyName = $property->getName();
@@ -29,7 +30,7 @@ abstract class AbstractEntityManager
                 $sql .= $propertyName . '=:' . $propertyName . ', ';
                 if ($content instanceof DateTime) {
                     $params[$propertyName] = $content->format('Y-m-d H:i:s');
-                }else if (is_bool($content)){
+                } elseif (is_bool($content)) {
                     if (!empty($content)) {
                         $params[$propertyName] = 1;
                     } else {
@@ -40,7 +41,7 @@ abstract class AbstractEntityManager
                 }
             }
         }
-        $sql = substr($sql,0,-2);
+        $sql = substr($sql, 0, -2);
         $sql .= " WHERE id=:id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute($params);

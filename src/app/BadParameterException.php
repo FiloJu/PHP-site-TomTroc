@@ -4,4 +4,6 @@ namespace App;
 
 use Exception;
 
-class BadParameterException extends Exception {}
+class BadParameterException extends Exception
+{
+}

@@ -25,13 +25,13 @@
                 </div>
 
                 <div class="profile-action">
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <?php if ($_SESSION['user_id'] != $user->getId()): ?>
+                    <?php if (isset($_SESSION['user_id'])) : ?>
+                        <?php if ($_SESSION['user_id'] != $user->getId()) : ?>
                             <a href="index.php?action=messagerie&create_chat_with=<?= htmlspecialchars($user->getId()) ?>" class="btn-write-message">
                                 Écrire un message
                             </a>
                         <?php endif; ?>
-                    <?php else: ?>
+                    <?php else : ?>
                         <a href="index.php?action=login" class="btn-write-message">
                             Écrire un message
                         </a>
@@ -52,12 +52,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (empty($books)): ?>
+                        <?php if (empty($books)) : ?>
                             <tr>
                                 <td colspan="4" class="empty-state">Cet utilisateur n'a pas encore de livres.</td>
                             </tr>
-                        <?php else: ?>
-                            <?php foreach ($books as $book): ?>
+                        <?php else : ?>
+                            <?php foreach ($books as $book) : ?>
                                 <tr>
                                     <td class="col-photo">
                                         <div class="book-img-wrapper">

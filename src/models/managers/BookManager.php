@@ -1,6 +1,7 @@
 <?php
 
 namespace Models\Managers;
+
 use PDO;
 use Models\Entities\Book;
 
@@ -80,21 +81,6 @@ class BookManager extends AbstractEntityManager
         return (int) $this->db->lastInsertId();
     }
 
-    // public function update(int $id, array $data): void
-    // {
-    //     $stmt = $this->db->prepare(
-    //         "UPDATE {$this->table} SET title = :title, author = :author, image = :image, description = :description, is_available = :is_available WHERE id = :id"
-    //     );
-
-    //     $stmt->execute([
-    //         'id' => $id,
-    //         'title' => $data['title'],
-    //         'author' => $data['author'],
-    //         'image' => $data['image'],
-    //         'description' => $data['description'],
-    //         'is_available' => $data['is_available'],
-    //     ]);
-    // }
     public function delete(int $id): void
     {
         $stmt = $this->db->prepare("DELETE FROM {$this->table} WHERE id = :id");
@@ -112,4 +98,3 @@ class BookManager extends AbstractEntityManager
         return $books;
     }
 }
-

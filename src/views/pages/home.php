@@ -21,8 +21,8 @@
     <h2 class="section-title">Les derniers livres ajoutés</h2>
 
     <div class="books-list">
-        <?php if (isset($books) && !empty($books)): ?>
-            <?php foreach ($books as $book): ?>
+        <?php if (isset($books) && !empty($books)) : ?>
+            <?php foreach ($books as $book) : ?>
                 <a href="index.php?action=book&id=<?= $book->getId() ?>" class="book">
                     <div class="book-cover">
                         <img src="img/books/<?= htmlspecialchars($book->getImage() ?: 'default_book.png') ?>"
@@ -42,7 +42,7 @@
                     </div>
                 </a>
             <?php endforeach; ?>
-        <?php else: ?>
+        <?php else : ?>
             <p>Aucun livre disponible.</p>
         <?php endif; ?>
     </div>

@@ -19,7 +19,7 @@ class UserController
     }
     public function index(): void
     {
-        $userId=$this->checkAuthorisation();
+        $userId = $this->checkAuthorisation();
 
         $userManager = new UserManager();
         $user = $userManager->findById((int)$userId);
@@ -90,15 +90,10 @@ class UserController
             exit;
         }
 
-        $avatarName=$this->saveAvatar($_FILES['avatar'], $userId);
+        $avatarName = $this->saveAvatar($_FILES['avatar'], $userId);
         $user->setAvatar($avatarName ?? $user->getAvatar());
         $user->setUsername($_POST['pseudo'] ?? $user->getUsername());
         $user->setEmail($_POST['email'] ?? $user->getEmail());
-        //$user->setPassword($_POST['password'] ?? '');
-        // $username = trim($_POST['pseudo'] ?? $user->getUsername());
-        // $email = trim($_POST['email'] ?? $user->getEmail());
-        // $password = trim($_POST['password'] ?? '');
-        //$avatarName = $user->getAvatar() ?? 'avatar_default.png';
 
         if (!empty($_POST['password'])) {
             $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));

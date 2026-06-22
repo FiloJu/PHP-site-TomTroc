@@ -1,17 +1,20 @@
 <?php
 
 namespace Models;
+
 use PDO;
 use PDOStatement;
-require_once '../config/database.php';
-class Database {
 
+require_once '../config/database.php';
+class Database
+{
 // Singleton pattern to ensure only one connection is created - one and only one instance of PDO is used throughout the application
     private static $instance = null;
 
     private $db;
 
-    private function __construct() {
+    private function __construct()
+    {
         $this->db = new PDO(
             'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
             DB_USER,

@@ -1,6 +1,7 @@
 <?php
 
 namespace Views;
+
 class View
 {
     private string $layout = '../src/views/layouts/main.php';

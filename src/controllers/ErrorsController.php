@@ -8,7 +8,7 @@ class ErrorsController
     {
         echo '404';
     }
-    
+
     public function error403()
     {
         echo '403';

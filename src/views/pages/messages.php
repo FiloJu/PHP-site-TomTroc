@@ -5,7 +5,7 @@
             <h1 class="messagerie-title">Messagerie</h1>
 
             <div class="conversation-list">
-                <?php foreach ($conversations as $conversation): ?>
+                <?php foreach ($conversations as $conversation) : ?>
                     <?php
                     //si 'last_message' est vide ou nul, on saute cette itération
                     if (empty($conversation['last_message'])) {
@@ -23,9 +23,9 @@
                             <div class="conv-header">
                                 <span class="conv-pseudo"><?= htmlspecialchars($conversation['other_pseudo']) ?></span>
                                 <?php
-                                // On affiche le point SI le dernier message n'est pas lu 
+                                // On affiche le point SI le dernier message n'est pas lu
                                 // ET SI ce n'est pas NOUS qui l'avons envoyé
-                                if ($conversation['last_message_read'] == 0 && $conversation['last_message_sender_id'] != $_SESSION['user_id']): ?>
+                                if ($conversation['last_message_read'] == 0 && $conversation['last_message_sender_id'] != $_SESSION['user_id']) : ?>
                                     <span class="unread-dot"></span>
                                 <?php endif; ?>
                                 <span class="conv-time"><?= date('H.i', strtotime($conversation['last_message_date'] ?? 'now')) ?> </span>
@@ -35,15 +35,14 @@
                     </a>
                 <?php endforeach; ?>
 
-                <?php if (empty($conversations)): ?>
+                <?php if (empty($conversations)) : ?>
                     <p class="empty-msg">Aucune conversation pour le moment.</p>
                 <?php endif; ?>
             </div>
         </div>
 
         <section class="messagerie-main">
-            <?php if (isset($selectedConversationId) && $selectedConversationId && !empty($conversations)): ?>
-
+            <?php if (isset($selectedConversationId) && $selectedConversationId && !empty($conversations)) : ?>
                 <div class="chat-header">
                     <div class="chat-header-avatar">
                         <img src="img/avatars/<?= htmlspecialchars($otherUserAvatar ?? 'Avatar_default.png') ?>" alt="Avatar">
@@ -52,10 +51,10 @@
                 </div>
 
                 <div class="chat-messages-area">
-                    <?php if (empty($messages)): ?>
+                    <?php if (empty($messages)) : ?>
                         <p class="mess-int">Dites bonjour !</p>
-                    <?php else: ?>
-                        <?php foreach ($messages as $msg): ?>
+                    <?php else : ?>
+                        <?php foreach ($messages as $msg) : ?>
                             <?php
                             // On vérifie si le message a été envoyé par "Moi" ou par "L'autre"
                             $isMe = ((int)$msg['sender_id'] === (int)($_SESSION['user_id'] ?? 0));
@@ -64,7 +63,7 @@
 
                             <div class="message-row <?= $classMessage ?>">
 
-                                <?php if (!$isMe): ?>
+                                <?php if (!$isMe) : ?>
                                     <img src="img/avatars/<?= htmlspecialchars($otherUserAvatar ?? 'Avatar_default.png') ?>" alt="Avatar" class="msg-avatar-small">
                                 <?php endif; ?>
 

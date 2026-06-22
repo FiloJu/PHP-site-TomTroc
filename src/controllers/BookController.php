@@ -14,14 +14,14 @@ class BookController
     {
         $bookManager = new BookManager();
         $books = $bookManager->findAll();
-        
+
         // Get unique user IDs
         $userIds = [];
         foreach ($books as $book) {
             $userIds[] = $book->getUserId();
         }
         $userIds = array_unique($userIds);
-        
+
         // Fetch users information
         $userManager = new UserManager();
         $users = [];
@@ -31,7 +31,7 @@ class BookController
                 $users[$userId] = $user;
             }
         }
-        
+
         $view = new View("Liste des livres");
         $view->render('books', ['books' => $books, 'users' => $users]);
     }
@@ -140,12 +140,11 @@ class BookController
             $book->setAuthor($author);
             $book->setImage($image === '' ? null : $image);
             $book->setDescription($description === '' ? null : $description);
-            if($available == 1) {
+            if ($available == 1) {
                 $book->setIsAvailable(true);
             } else {
                 $book->setIsAvailable(false);
             }
-            //$book->setIsAvailable(($available === '1' || $available === 'disponible'));
             $manager->update($book);
 
             header("Location: index.php?action=book&id={$id}");

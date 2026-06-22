@@ -1,15 +1,17 @@
 <?php
 
 namespace Models\Managers;
+
 use DateTimeInterface;
 use Models\Entities\User;
 use ReflectionClass;
 
 class UserManager extends AbstractEntityManager
 {
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
-        $this->table='users';
+        $this->table = 'users';
     }
     public function getUserByUsername(string $username): ?User
     {
@@ -34,7 +36,7 @@ class UserManager extends AbstractEntityManager
         return $user ? new User($user) : null;
     }
 
-    protected function create(User $user): int 
+    protected function create(User $user): int
     {
         $stmt = $this->db->prepare("INSERT INTO {$this->table} (username, email, password) VALUES (:username, :email, :password)");
         $stmt->execute([
@@ -45,8 +47,9 @@ class UserManager extends AbstractEntityManager
         return $this->db->lastInsertId();
     }
 
-    public function save (User $user) : int {
-        if($user->getId() == -1) {
+    public function save(User $user): int
+    {
+        if ($user->getId() == -1) {
             return $this->create($user);
         }
         return $this->update($user);
@@ -61,7 +64,4 @@ class UserManager extends AbstractEntityManager
     //     ]);
     //     return (int)$this->db->lastInsertId();
     // }
-
-
-
 }

@@ -87,7 +87,7 @@ class Route
         return $this->method;
     }
 
-       public function hasParameters(): bool
+    public function hasParameters(): bool
     {
         return count($this->parameters) > 0;
     }
@@ -95,5 +95,5 @@ class Route
     public function parameters(): array
     {
         return $this->parameters;
-    } 
+    }
 }

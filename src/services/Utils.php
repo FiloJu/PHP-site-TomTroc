@@ -1,15 +1,17 @@
 <?php
+
 namespace Services;
 
 use DateTime;
+
 /**
  * Classe utilitaire : cette classe ne contient que des méthodes statiques qui peuvent être appelées
  * directement sans avoir besoin d'instancier un objet Utils.
- * Exemple : Utils::redirect('home'); 
+ * Exemple : Utils::redirect('home');
  */
 class Utils
 {
-    // redirection vers une URL 
+    // redirection vers une URL
     public static function redirect(string $action): void
     {
         header("Location: index.php?action=$action");
@@ -47,9 +49,9 @@ class Utils
         return "moins d'1 mois";
     }
 
-    public static function trim ($string): string
+    public static function trim($string): string
     {
-        if(!empty($string)) {
+        if (!empty($string)) {
             return trim($string);
         }
         return "";

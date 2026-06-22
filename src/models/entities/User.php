@@ -4,6 +4,7 @@ namespace Models\Entities;
 
 use DateTime;
 use Services\Utils;
+
 class User extends AbstractEntity
 {
     private string $username;

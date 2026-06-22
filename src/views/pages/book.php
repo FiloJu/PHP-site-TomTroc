@@ -1,5 +1,5 @@
 <section class="book-page-wrapper">
-    <?php if ($book): ?>
+    <?php if ($book) : ?>
         <div class="chemin-navigation">
             <a href="index.php?action=books">Nos livres à l'échange</a>
             <span><?= htmlspecialchars($book->getTitle()) ?></span>
@@ -31,14 +31,14 @@
                 </div>
 
                 <div class="action-wrapper">
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <?php if ($_SESSION['user_id'] != $book->getUserId()): ?>
+                    <?php if (isset($_SESSION['user_id'])) : ?>
+                        <?php if ($_SESSION['user_id'] != $book->getUserId()) : ?>
                             <a href="index.php?action=messagerie&create_chat_with=<?= $book->getUserId() ?>"
                                 class="btn-send-message">
                                 Envoyer un message
                             </a>
                         <?php endif; ?>
-                    <?php else: ?>
+                    <?php else : ?>
                         <a href="index.php?action=login" class="btn-send-message">
                             Envoyer un message
                         </a>
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-    <?php else: ?>
+    <?php else : ?>
         <div class="no-results">
             <p>Livre introuvable.</p>
         </div>

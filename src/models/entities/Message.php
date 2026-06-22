@@ -3,6 +3,7 @@
 namespace Models\Entities;
 
 use DateTime;
+
 class Message extends AbstractEntity
 {
     private int $sender_id;
@@ -50,5 +51,4 @@ class Message extends AbstractEntity
     {
         $this->created_at = $created_at;
     }
-
 }

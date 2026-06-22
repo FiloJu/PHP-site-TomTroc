@@ -3,6 +3,7 @@
 namespace Models\Entities;
 
 use PDO;
+
 class Book extends AbstractEntity
 {
     private int $user_id;
@@ -32,7 +33,7 @@ class Book extends AbstractEntity
     {
         return $this->description;
     }
-    public function getIsAvailable(): bool 
+    public function getIsAvailable(): bool
     {
         return $this->is_available;
     }

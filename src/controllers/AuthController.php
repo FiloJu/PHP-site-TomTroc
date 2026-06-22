@@ -6,7 +6,6 @@ use Views\View;
 use Models\Managers\UserManager;
 use Models\Entities\User;
 
-
 class AuthController
 {
     public function login()
@@ -26,7 +25,7 @@ class AuthController
         if (empty(trim($_POST['username'] ?? '')) || empty(trim($_POST['email'] ?? '')) || empty(trim($_POST['password'] ?? ''))) {
             header("Location: index.php?action=register");
             exit;
-        } 
+        }
         $manager = new UserManager();
         $user = new User($_POST);
         $userId = $manager->save($user);
@@ -74,10 +73,9 @@ class AuthController
     {
         // Destroy the session
         session_destroy();
-        
+
         // Redirect to home page
         header('Location: index.php');
         exit;
     }
-        
 }

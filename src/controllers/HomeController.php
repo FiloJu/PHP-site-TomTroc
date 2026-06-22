@@ -5,8 +5,10 @@ namespace Controllers;
 use Views\View;
 use Models\Managers\BookManager;
 
-class HomeController {
-    public function index() {
+class HomeController
+{
+    public function index()
+    {
         $logged_in = $_SESSION['auth'] ?? false;
 
         $bookManager = new BookManager();

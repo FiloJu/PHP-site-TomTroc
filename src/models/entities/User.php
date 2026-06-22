@@ -3,20 +3,21 @@
 namespace Models\Entities;
 
 use DateTime;
+use Services\Utils;
 class User extends AbstractEntity
 {
     private string $username;
     private string $email;
     private string $password;
-    private ?string $avatar;
+    private ?string $avatar = 'avatar_default.png';
     private DateTime $created_at;
     public function setUsername(string $username): void
     {
-        $this->username = $username;
+        $this->username = Utils::trim($username);
     }
     public function setEmail(string $email): void
     {
-        $this->email = $email;
+        $this->email = Utils::trim($email);
     }
     public function setPassword(string $password): void
     {
@@ -24,7 +25,7 @@ class User extends AbstractEntity
     }
     public function setAvatar(?string $avatar): void
     {
-        $this->avatar = $avatar;
+        $this->avatar = Utils::trim($avatar);
     }
     public function setCreatedAt($created_at): void
     {

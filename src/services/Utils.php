@@ -1,5 +1,7 @@
 <?php
+namespace Services;
 
+use DateTime;
 /**
  * Classe utilitaire : cette classe ne contient que des méthodes statiques qui peuvent être appelées
  * directement sans avoir besoin d'instancier un objet Utils.
@@ -43,5 +45,13 @@ class Utils
         }
 
         return "moins d'1 mois";
+    }
+
+    public static function trim ($string): string
+    {
+        if(!empty($string)) {
+            return trim($string);
+        }
+        return "";
     }
 }

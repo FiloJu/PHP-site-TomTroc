@@ -12,16 +12,6 @@ class Book extends AbstractEntity
     private ?string $description;
     private bool $is_available;
 
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-        $this->user_id = $data['user_id'];
-        $this->title = $data['title'];
-        $this->author = $data['author'];
-        $this->image = $data['image'] ?? null;
-        $this->description = $data['description'] ?? null;
-        $this->is_available = (bool)$data['is_available'];
-    }
     public function getUserId(): int
     {
         return $this->user_id;
@@ -42,7 +32,7 @@ class Book extends AbstractEntity
     {
         return $this->description;
     }
-    public function isAvailable(): bool
+    public function getIsAvailable(): bool 
     {
         return $this->is_available;
     }
@@ -68,6 +58,6 @@ class Book extends AbstractEntity
     }
     public function setIsAvailable(?bool $is_available): void
     {
-        $this->is_available = (bool) $is_available;
+        $this->is_available = $is_available;
     }
 }

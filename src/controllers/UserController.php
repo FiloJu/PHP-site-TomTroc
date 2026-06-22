@@ -8,13 +8,18 @@ use Models\Managers\BookManager;
 
 class UserController
 {
-    public function index(): void
+    private function checkAuthorisation()
     {
         $userId = $_SESSION['user_id'] ?? null;
         if (empty($userId)) {
             header('Location: index.php?action=login');
             exit;
         }
+        return $userId;
+    }
+    public function index(): void
+    {
+        $userId=$this->checkAuthorisation();
 
         $userManager = new UserManager();
         $user = $userManager->findById((int)$userId);
@@ -54,29 +59,11 @@ class UserController
         ]);
     }
 
-    public function updateProfile(): void
+    private function saveAvatar($file, $userId)
     {
-        $userId = $_SESSION['user_id'] ?? null;
-        if (empty($userId)) {
-            header('Location: index.php?action=login');
-            exit;
-        }
-
-        $userManager = new UserManager();
-        $user = $userManager->findById((int)$userId);
-        if (!$user) {
-            header('Location: index.php?action=login');
-            exit;
-        }
-
-        $username = trim($_POST['pseudo'] ?? $user->getUsername());
-        $email = trim($_POST['email'] ?? $user->getEmail());
-        $password = trim($_POST['password'] ?? '');
-        $avatarName = $user->getAvatar() ?? 'avatar_default.png';
-
-        if (!empty($_FILES['avatar']['tmp_name']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-            $tmpFile = $_FILES['avatar']['tmp_name'];
-            $originalName = $_FILES['avatar']['name'];
+        if (!empty($file['tmp_name']) && $file['error'] === UPLOAD_ERR_OK) {
+            $tmpFile = $file['tmp_name'];
+            $originalName = $file['name'];
             $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
             $allowed = ['jpg', 'jpeg', 'png'];
 
@@ -87,20 +74,37 @@ class UserController
                     mkdir(dirname($destination), 0755, true);
                 }
                 move_uploaded_file($tmpFile, $destination);
+                return $avatarName;
             }
         }
+        return null;
+    }
+    public function updateProfile(): void
+    {
+        $userId = $this->checkAuthorisation();
 
-        $updateData = [
-            'username' => $username,
-            'email' => $email,
-            'avatar' => $avatarName,
-        ];
-
-        if ($password !== '') {
-            $updateData['password'] = password_hash($password, PASSWORD_BCRYPT);
+        $userManager = new UserManager();
+        $user = $userManager->findById($userId);
+        if (!$user) {
+            header('Location: index.php?action=login');
+            exit;
         }
 
-        $userManager->update((int)$userId, $updateData);
+        $avatarName=$this->saveAvatar($_FILES['avatar'], $userId);
+        $user->setAvatar($avatarName ?? $user->getAvatar());
+        $user->setUsername($_POST['pseudo'] ?? $user->getUsername());
+        $user->setEmail($_POST['email'] ?? $user->getEmail());
+        //$user->setPassword($_POST['password'] ?? '');
+        // $username = trim($_POST['pseudo'] ?? $user->getUsername());
+        // $email = trim($_POST['email'] ?? $user->getEmail());
+        // $password = trim($_POST['password'] ?? '');
+        //$avatarName = $user->getAvatar() ?? 'avatar_default.png';
+
+        if (!empty($_POST['password'])) {
+            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
+        }
+
+        $userManager->save($user);
 
         header('Location: index.php?action=profile');
         exit;

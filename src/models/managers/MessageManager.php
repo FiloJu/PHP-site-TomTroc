@@ -8,7 +8,7 @@ use Models\Database;
 
 class MessageManager extends AbstractEntityManager
 {
-    private string $table = "messages";
+    public string $table = "messages";
 
     public function create(array $data): int
     {
@@ -27,6 +27,7 @@ class MessageManager extends AbstractEntityManager
      * Récupère les messages reçus par un utilisateur, groupés par sender_id.
      * Renvoie un tableau associatif [sender_id => ['sender_username' => string, 'messages' => [...messages...]]]
      */
+    // TODO : à voir si je garde cette fonction telle qu'elle ou si je la modifie pour la simplifier
     public function findConversationsByReceiver(int $userId): array
     {
         $sql = "SELECT m.id,

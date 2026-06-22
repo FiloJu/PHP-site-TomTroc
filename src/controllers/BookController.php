@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Models\Entities\Book;
 use Models\Managers\BookManager;
 use Models\Managers\UserManager;
 use Views\View;
@@ -132,13 +133,20 @@ class BookController
                 exit;
             }
 
-            $manager->update($id, [
-                'title' => $title,
-                'author' => $author,
-                'image' => $image === '' ? null : $image,
-                'description' => $description === '' ? null : $description,
-                'is_available' => (int) ($available === '1' || $available === 'disponible'),
-            ]);
+            $book = new Book();
+            $book->setId($id);
+            $book->setUserId($_SESSION['user_id']);
+            $book->setTitle($title);
+            $book->setAuthor($author);
+            $book->setImage($image === '' ? null : $image);
+            $book->setDescription($description === '' ? null : $description);
+            if($available == 1) {
+                $book->setIsAvailable(true);
+            } else {
+                $book->setIsAvailable(false);
+            }
+            //$book->setIsAvailable(($available === '1' || $available === 'disponible'));
+            $manager->update($book);
 
             header("Location: index.php?action=book&id={$id}");
             exit;

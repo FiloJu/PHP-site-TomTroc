@@ -19,7 +19,7 @@
                         <span class="edit-label-light">Photo</span>
 
                         <div class="edit-image-frame">
-                            <img src="img/books/<?= htmlspecialchars($book->getImage()) ?>" alt="Couverture du livre" id="book-preview">
+                            <img src="img/books/<?= htmlspecialchars($book->getImage() ?: 'default_book.png') ?>"alt="<?= htmlspecialchars($book->getTitle()) ?>" class="book-image-detail">
                         </div>
 
                         <label for="book-image-upload" class="edit-link-modify-photo">Modifier la photo</label>
@@ -48,8 +48,8 @@
                             <label for="available" class="edit-label-light">Disponibilité</label>
                             <div class="edit-select-wrapper">
                                 <select name="available" id="available">
-                                    <option value="1" <?= $book->isAvailable() ? 'selected' : '' ?>>disponible</option>
-                                    <option value="0" <?= !$book->isAvailable() ? 'selected' : '' ?>>non disponible</option>
+                                    <option value="1" <?= $book->getIsAvailable() ? 'selected' : '' ?>>disponible</option>
+                                    <option value="0" <?= !$book->getIsAvailable() ? 'selected' : '' ?>>non disponible</option>
                                 </select>
                             </div>
                         </div>

@@ -1,12 +1,16 @@
 <?php
 
 namespace Models\Managers;
+use DateTimeInterface;
 use Models\Entities\User;
+use ReflectionClass;
 
 class UserManager extends AbstractEntityManager
 {
-    private string $table = "users";
-
+    public function __construct(){
+        parent::__construct();
+        $this->table='users';
+    }
     public function getUserByUsername(string $username): ?User
     {
         $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE username = :username");
@@ -30,46 +34,34 @@ class UserManager extends AbstractEntityManager
         return $user ? new User($user) : null;
     }
 
-    public function create(array $data): int
+    protected function create(User $user): int 
     {
         $stmt = $this->db->prepare("INSERT INTO {$this->table} (username, email, password) VALUES (:username, :email, :password)");
         $stmt->execute([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => password_hash($data['password'], PASSWORD_BCRYPT)
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'password' => password_hash($user->getPassword(), PASSWORD_BCRYPT)
         ]);
-        return (int)$this->db->lastInsertId();
+        return $this->db->lastInsertId();
     }
 
-    public function update(int $id, array $data): void
-    {
-        $fields = [];
-        $params = ['id' => $id];
-
-        if (isset($data['username'])) {
-            $fields[] = 'username = :username';
-            $params['username'] = $data['username'];
+    public function save (User $user) : int {
+        if($user->getId() == -1) {
+            return $this->create($user);
         }
-        if (isset($data['email'])) {
-            $fields[] = 'email = :email';
-            $params['email'] = $data['email'];
-        }
-        if (isset($data['password'])) {
-            $fields[] = 'password = :password';
-            $params['password'] = $data['password'];
-        }
-        if (isset($data['avatar'])) {
-            $fields[] = 'avatar = :avatar';
-            $params['avatar'] = $data['avatar'];
-        }
-
-        if (empty($fields)) {
-            return;
-        }
-
-        $sql = "UPDATE {$this->table} SET " . implode(', ', $fields) . " WHERE id = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($params);
+        return $this->update($user);
     }
+    // public function create(array $data): int
+    // {
+    //     $stmt = $this->db->prepare("INSERT INTO {$this->table} (username, email, password) VALUES (:username, :email, :password)");
+    //     $stmt->execute([
+    //         'username' => $data['userName'],
+    //         'email' => $data['email'],
+    //         'password' => password_hash($data['password'], PASSWORD_BCRYPT)
+    //     ]);
+    //     return (int)$this->db->lastInsertId();
+    // }
+
+
 
 }

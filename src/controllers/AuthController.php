@@ -28,8 +28,8 @@ class AuthController
             exit;
         } 
         $manager = new UserManager();
-        $user = new User();
-        $userId = $manager->create($_POST);
+        $user = new User($_POST);
+        $userId = $manager->save($user);
 
         // Redirect to the login page after successful registration
         header("Location: index.php?action=login");

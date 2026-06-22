@@ -6,7 +6,7 @@ use Models\Entities\Book;
 
 class BookManager extends AbstractEntityManager
 {
-    private string $table = "books";
+    public string $table = "books";
 
     public function findAll(): array
     {
@@ -80,21 +80,21 @@ class BookManager extends AbstractEntityManager
         return (int) $this->db->lastInsertId();
     }
 
-    public function update(int $id, array $data): void
-    {
-        $stmt = $this->db->prepare(
-            "UPDATE {$this->table} SET title = :title, author = :author, image = :image, description = :description, is_available = :is_available WHERE id = :id"
-        );
+    // public function update(int $id, array $data): void
+    // {
+    //     $stmt = $this->db->prepare(
+    //         "UPDATE {$this->table} SET title = :title, author = :author, image = :image, description = :description, is_available = :is_available WHERE id = :id"
+    //     );
 
-        $stmt->execute([
-            'id' => $id,
-            'title' => $data['title'],
-            'author' => $data['author'],
-            'image' => $data['image'],
-            'description' => $data['description'],
-            'is_available' => $data['is_available'],
-        ]);
-    }
+    //     $stmt->execute([
+    //         'id' => $id,
+    //         'title' => $data['title'],
+    //         'author' => $data['author'],
+    //         'image' => $data['image'],
+    //         'description' => $data['description'],
+    //         'is_available' => $data['is_available'],
+    //     ]);
+    // }
     public function delete(int $id): void
     {
         $stmt = $this->db->prepare("DELETE FROM {$this->table} WHERE id = :id");
@@ -103,7 +103,6 @@ class BookManager extends AbstractEntityManager
 
     public function findLatest(int $limit = 4): array
     {
-        $limit = (int) $limit;
         $stmt = $this->db->query("SELECT * FROM {$this->table} ORDER BY id DESC LIMIT {$limit}");
         $booksData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $books = [];

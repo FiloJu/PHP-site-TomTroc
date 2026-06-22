@@ -21,7 +21,7 @@
                         <a href="index.php?action=book&id=<?= htmlspecialchars($book->getId())  ?>">
                             <div class="book-image">
                                 <img src="img/books/<?= htmlspecialchars($book->getImage() ?: 'default_book.png') ?>" alt="<?= htmlspecialchars($book->getTitle()) ?>">
-                                <?php if ($book->isAvailable() === false) : ?>
+                                <?php if ($book->getIsAvailable() === false) : ?>
                                     <span class="badge-non-disponible">non dispo.</span>
                                 <?php endif; ?>
                             </div>

@@ -1,4 +1,6 @@
-<div class="my-account-wrapper">
+<?php 
+use Services\Utils;
+?><div class="my-account-wrapper">
     <div class="profile-container">
 
         <div class="profile-header-flex">
@@ -90,7 +92,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <?php if (!$book->isAvailable()): ?>
+                                    <?php if (!$book->getIsAvailable()): ?>
                                         <span class="badge-not-avalaible">non dispo.</span>
                                     <?php else: ?>
                                         <span class="badge-disponible">disponible</span>

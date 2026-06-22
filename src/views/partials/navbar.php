@@ -1,4 +1,6 @@
-<?php require_once __DIR__ . '/../../services/Utils.php'; ?>
+<?php require_once __DIR__ . '/../../services/Utils.php'; 
+
+use Services\Utils;?>
 <header class="site-header">
     <div class="header-inner">
         <nav class="nav">

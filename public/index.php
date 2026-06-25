@@ -94,7 +94,7 @@ try {
             ]
         ]),
         new Route([
-            'action' => 'delete-book',
+            'action' => 'deleteBook',
             'controller' => BookController::class,
             'method' => 'delete',
             'verb' => 'POST',

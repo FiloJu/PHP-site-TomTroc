@@ -102,7 +102,9 @@ use Services\Utils;
                                 </td>
                                 <td class="table-actions">
                                     <a href="index.php?action=editBook&id=<?= $book->getId() ?>" class="action-edit">Éditer</a>
-                                    <a href="index.php?action=deleteBook&id=<?= $book->getId() ?>" class="action-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce livre ?');">Supprimer</a>
+                                    <form action="index.php?action=deleteBook&id=<?= $book->getId() ?>" method="POST" style="display:inline">
+                                        <button type="submit" class="action-delete" style=".action-delete">Supprimer</button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

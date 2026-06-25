@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Models\Entities\Message;
 use Models\Managers\MessageManager;
+use Models\Managers\UserManager;
 use Views\View;
 
 class MessageController
@@ -20,12 +21,14 @@ class MessageController
 
         $otherUserId = null;
         if (isset($_GET['sender_id'])) {
-            $otherUserId = (int)$_GET['sender_id'];
+            $otherUserId = $_GET['sender_id'];
         } elseif (isset($_GET['id'])) {
-            $otherUserId = (int)$_GET['id'];
+            $otherUserId = $_GET['id'];
+        } elseif (isset($_GET['create_chat_with'])) {
+            $otherUserId = $_GET['create_chat_with'];
         }
 
-        $conversations = $manager->findConversationsByReceiver((int)$userId);
+        $conversations = $manager->findConversationsByReceiver($userId);
         $selectedConversationId = null;
         $messages = [];
         $otherUserPseudo = null;
@@ -37,6 +40,15 @@ class MessageController
             $messages = $data['messages'];
             $otherUserPseudo = $data['other_user']['username'] ?? 'Utilisateur';
             $otherUserAvatar = $data['other_user']['avatar'] ?? 'Avatar_default.png';
+
+            if (empty($messages)) {
+                $userManager = new UserManager();
+                $otherUser = $userManager->findById($otherUserId);
+                if ($otherUser) {
+                    $otherUserPseudo = $otherUser->getUsername();
+                    $otherUserAvatar = $otherUser->getAvatar() ?: 'Avatar_default.png';
+                }
+            }
         }
 
         $view = new View('Messages');

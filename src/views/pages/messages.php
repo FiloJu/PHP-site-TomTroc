@@ -42,7 +42,7 @@
         </div>
 
         <section class="messagerie-main">
-            <?php if (isset($selectedConversationId) && $selectedConversationId && !empty($conversations)) : ?>
+            <?php if (isset($selectedConversationId) && $selectedConversationId) : ?>
                 <div class="chat-header">
                     <div class="chat-header-avatar">
                         <img src="img/avatars/<?= htmlspecialchars($otherUserAvatar ?? 'Avatar_default.png') ?>" alt="Avatar">

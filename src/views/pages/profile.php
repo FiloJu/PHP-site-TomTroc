@@ -2,7 +2,8 @@
 
 use Services\Utils;
 
-?><div class="my-account-wrapper">
+?>
+<div class="my-account-wrapper">
     <div class="profile-container">
 
         <div class="profile-header-flex">

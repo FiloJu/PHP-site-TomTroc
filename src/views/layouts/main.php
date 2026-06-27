@@ -15,7 +15,7 @@
     <?php $this->partial('navbar') ?>
 
     <main class="container">
-        <?= $content ?>     <!-- Contenu de la vue -->
+        <?= $content ?>     <!-- Content of the view -->
     </main>
 
     <?php $this->partial('footer') ?>

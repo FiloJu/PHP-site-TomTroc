@@ -10,6 +10,9 @@ class MessageManager extends AbstractEntityManager
 {
     public string $table = "messages";
 
+    /**
+     * Create a new message in the database.
+     */
     public function create(array $data): int
     {
         $stmt = $this->db->prepare("INSERT INTO {$this->table} (sender_id, receiver_id, content, is_read, created_at) VALUES (:sender_id, :receiver_id, :content, :is_read, :created_at)");
@@ -24,10 +27,9 @@ class MessageManager extends AbstractEntityManager
     }
 
     /**
-     * Récupère les messages reçus par un utilisateur, groupés par sender_id.
-     * Renvoie un tableau associatif [sender_id => ['sender_username' => string, 'messages' => [...messages...]]]
+     * Find all conversations for a specific receiver (user).
+     * Returns an array of conversations with the last message and other user info.
      */
-    // TODO : à voir si je garde cette fonction telle qu'elle ou si je la modifie pour la simplifier
     public function findConversationsByReceiver(int $userId): array
     {
         $sql = "SELECT m.id,
@@ -67,8 +69,8 @@ class MessageManager extends AbstractEntityManager
     }
 
     /**
-     * Récupère tous les messages échangés entre $userId et $otherUserId.
-     * Retourne un tableau avec les messages et les infos de l'autre utilisateur.
+     * Find all messages exchanged between $userId and $otherUserId.
+     * Returns an array with the messages and the other user's information.
      */
     public function findConversationBetween(int $userId, int $otherUserId): array
     {

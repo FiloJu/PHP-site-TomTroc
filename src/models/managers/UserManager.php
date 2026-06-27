@@ -13,6 +13,11 @@ class UserManager extends AbstractEntityManager
         parent::__construct();
         $this->table = 'users';
     }
+    /**
+     * Get a user by their username.
+     * @param string $username
+     * @return User|null
+     */
     public function getUserByUsername(string $username): ?User
     {
         $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE username = :username");
@@ -20,6 +25,11 @@ class UserManager extends AbstractEntityManager
         $user = $stmt->fetch();
         return $user ? new User($user) : null;
     }
+    /**
+     * Get a user by their email address.
+     * @param string $email
+     * @return User|null
+     */
     public function getUserByEmail(string $email): ?User
     {
         $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE email = :email");
@@ -28,6 +38,11 @@ class UserManager extends AbstractEntityManager
         return $user ? new User($user) : null;
     }
 
+    /**
+     * Find a user by their ID.
+     * @param int $id
+     * @return User|null
+     */
     public function findById(int $id): ?User
     {
         $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE id = :id");
@@ -36,6 +51,11 @@ class UserManager extends AbstractEntityManager
         return $user ? new User($user) : null;
     }
 
+    /**
+     * Create a new user in the database.
+     * @param User $user
+     * @return int
+     */
     protected function create(User $user): int
     {
         $stmt = $this->db->prepare("INSERT INTO {$this->table} (username, email, password) VALUES (:username, :email, :password)");
@@ -47,6 +67,11 @@ class UserManager extends AbstractEntityManager
         return $this->db->lastInsertId();
     }
 
+    /**
+     * Check if a user already exists in the database, based on their Id. If the user does not exist, create a new user. If the user exists, update their information.
+     * @param User $user
+     * @return int
+     */
     public function save(User $user): int
     {
         if ($user->getId() == -1) {
@@ -54,14 +79,4 @@ class UserManager extends AbstractEntityManager
         }
         return $this->update($user);
     }
-    // public function create(array $data): int
-    // {
-    //     $stmt = $this->db->prepare("INSERT INTO {$this->table} (username, email, password) VALUES (:username, :email, :password)");
-    //     $stmt->execute([
-    //         'username' => $data['userName'],
-    //         'email' => $data['email'],
-    //         'password' => password_hash($data['password'], PASSWORD_BCRYPT)
-    //     ]);
-    //     return (int)$this->db->lastInsertId();
-    // }
 }

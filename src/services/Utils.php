@@ -5,26 +5,35 @@ namespace Services;
 use DateTime;
 
 /**
- * Classe utilitaire : cette classe ne contient que des méthodes statiques qui peuvent être appelées
- * directement sans avoir besoin d'instancier un objet Utils.
- * Exemple : Utils::redirect('home');
+ * Class Utils
+ * A utility class providing common helper functions.
  */
 class Utils
 {
-    // redirection vers une URL
+    /**
+     * Redirect to a specified action.
+     * @param string $action The action to redirect to.
+     */
     public static function redirect(string $action): void
     {
         header("Location: index.php?action=$action");
         exit();
     }
-    //Vérifiez si l'utilisateur est connecté , utile pour protéger les pages " Mon compte"
+    /**
+     * Check if the user is connected.
+     * @return bool
+     */
     public static function isUserConnected(): bool
     {
-        //vérification si la variable 'user_id' existe dans la session
+        // Check if the user is connected by verifying if the 'user_id' session variable is set.
         return isset($_SESSION['user_id']);
     }
 
-    //date avec calcul ancienneté (1mois, 6jours, ...)
+    /**
+     * Format a date with a relative time description.
+     * @param mixed $date The date to format.
+     * @return string
+     */
     public static function format($date): string
     {
         if ($date === null) {
@@ -49,6 +58,11 @@ class Utils
         return "moins d'1 mois";
     }
 
+    /**
+     * Trim a string and return it.
+     * @param string $string The string to trim.
+     * @return string
+     */
     public static function trim($string): string
     {
         if (!empty($string)) {

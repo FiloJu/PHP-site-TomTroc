@@ -17,6 +17,9 @@ abstract class AbstractEntityManager
         $this->db = Database::connect();
     }
 
+    /**
+     * Update an existing entity in the database.
+     */
     public function update(AbstractEntity $entity): int
     {
         $reflection = new ReflectionClass($entity);

@@ -6,20 +6,17 @@ class View
 {
     private string $layout = '../src/views/layouts/main.php';
 
-    /**
-     * Le titre de la page.
-     */
     private string $title;
 
-
-    /**
-     * Constructeur.
-     */
     public function __construct($title)
     {
         $this->title = $title;
     }
-
+    /**
+     * Render a view template with the provided data.
+     * @param string $template The name of the template to render.
+     * @param array $data An associative array of data to pass to the view.
+     */
     public function render(string $template, array $data = []): void
     {
         // Rendre les données disponibles dans la vue
@@ -36,7 +33,11 @@ class View
         // Injecter dans le layout
         require $this->layout;
     }
-
+    /**
+     * Render a partial view template with the provided data.
+     * @param string $template The name of the partial template to render.
+     * @param array $data An associative array of data to pass to the partial view.
+     */
     public function partial(string $template, array $data = []): void
     {
         extract($data);

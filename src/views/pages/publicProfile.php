@@ -1,3 +1,6 @@
+<?php 
+use Services\Utils;
+?>
 <div class="profile-page-wrapper">
     <div class="container-profile-main-flex">
 

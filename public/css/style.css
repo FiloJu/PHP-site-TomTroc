@@ -923,36 +923,33 @@ img {
 
 /* --- Mise en page globale --- */
 .profile-page-wrapper {
-    background-color: #F0F0F0;
+    background-color: #FAF9F7;
     padding-top: 103px;
     padding-bottom: 214px;
     min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .container-profile-main-flex {
     display: flex;
     justify-content: flex-start;
-    /*aligne au debaut (gauche)*/
     align-items: flex-start;
     gap: 28px;
-    /* Espace entre les deux blocs */
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
-    /*centre la zone sur les grands écrans */
-    padding-left: 150px;
+    padding: 0 24px;
     box-sizing: border-box;
+    flex-wrap: wrap;
 }
 
 /* --- BLOC GAUCHE (Carte Blanche) --- */
 .profile-sidebar {
     flex: 0 0 341px;
-    /* Largeur fixe Figma */
     width: 341px;
-    height: 579px;
+    min-height: 579px;
     background-color: #FFFFFF;
     border-radius: 20px;
-    /* Arrondi de 20px */
     box-sizing: border-box;
     padding: 0;
 }
@@ -1061,8 +1058,9 @@ img {
 
 /* --- BLOC DROITE (Tableau) --- */
 .profile-content {
-    flex: 0 0 771px;
-    width: 771px;
+    flex: 1 1 0;
+    min-width: 0;
+    width: 100%;
 }
 
 .table-round-container {
@@ -1070,12 +1068,15 @@ img {
     background-color: #FFFFFF;
     overflow: hidden;
     width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
 }
 
 .books-table {
     width: 100%;
+    min-width: 700px;
     border-collapse: collapse;
-    /* harmonise les briques de lignes*/
+    table-layout: fixed;
 }
 
 /* --- EN-TÊTE --- */
@@ -1097,6 +1098,7 @@ img {
     font-size: 12px;
     color: #292929;
     vertical-align: middle;
+    word-break: break-word;
 }
 
 /* --- ALTERNANCE DES COULEURS --- */
@@ -1126,9 +1128,50 @@ img {
     font-style: italic;
     line-height: 1.5;
     max-width: 200px;
-    /* Évite que le texte ne prenne trop de place */
 }
 
+@media (max-width: 1024px) {
+    .container-profile-main-flex {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 16px;
+    }
+
+    .profile-sidebar {
+        width: 100%;
+        max-width: 600px;
+        flex-basis: auto;
+    }
+
+    .profile-content {
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .profile-page-wrapper {
+        padding-top: 72px;
+        padding-bottom: 120px;
+    }
+
+    .profile-sidebar {
+        min-height: auto;
+        border-radius: 16px;
+    }
+
+    .table-round-container {
+        border-radius: 16px;
+    }
+
+    .books-table {
+        min-width: 620px;
+    }
+
+    .books-table th,
+    .books-table td {
+        padding: 16px 12px;
+    }
+}
 
 /* ==========================================================================
    11. PAGE MODIFIER UN LIVRE  + PAGE ajOUTER UN LIVRE

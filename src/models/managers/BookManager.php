@@ -52,6 +52,20 @@ class BookManager extends AbstractEntityManager
         }
         return $books;
     }
+
+    public function searchByTitle(string $search): array
+    {
+        $query = '%' . trim($search) . '%';
+        $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE LOWER(title) LIKE LOWER(:search) ORDER BY title ASC");
+        $stmt->execute(['search' => $query]);
+        $booksData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $books = [];
+        foreach ($booksData as $bookData) {
+            $books[] = new Book($bookData);
+        }
+        return $books;
+    }
+
     public function findOne(int $id): ?Book
     {
         $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE id = :id");

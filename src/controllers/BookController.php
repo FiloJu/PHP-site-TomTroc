@@ -13,7 +13,8 @@ class BookController
     public function findAll(): void
     {
         $bookManager = new BookManager();
-        $books = $bookManager->findAll();
+        $search = trim($_GET['search'] ?? '');
+        $books = $search !== '' ? $bookManager->searchByTitle($search) : $bookManager->findAll();
 
         // Get unique user IDs
         $userIds = [];

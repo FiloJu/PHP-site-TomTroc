@@ -8,6 +8,9 @@ use Models\Managers\BookManager;
 
 class UserController
 {
+    /**
+     * Check if the user is authorised to access a page.
+     */
     private function checkAuthorisation()
     {
         $userId = $_SESSION['user_id'] ?? null;
@@ -17,6 +20,9 @@ class UserController
         }
         return $userId;
     }
+    /**
+     * Display the user's profile page.
+     */
     public function index(): void
     {
         $userId = $this->checkAuthorisation();
@@ -39,6 +45,9 @@ class UserController
         ]);
     }
 
+    /**
+     * Display a public user profile.
+     */
     public function publicProfile(int $id): void
     {
         $userManager = new UserManager();
@@ -79,6 +88,9 @@ class UserController
         }
         return null;
     }
+    /**
+     * Update the user's profile information.
+     */
     public function updateProfile(): void
     {
         $userId = $this->checkAuthorisation();

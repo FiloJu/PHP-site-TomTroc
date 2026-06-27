@@ -4,6 +4,9 @@ namespace Middlewares;
 
 class Authentication
 {
+    /**
+     * Check if the user is authenticated.
+     */
     public function checkAuth()
     {
         $logged_in = $_SESSION['auth'] ?? false;

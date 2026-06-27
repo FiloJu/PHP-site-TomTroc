@@ -8,18 +8,27 @@ use Models\Entities\User;
 
 class AuthController
 {
+    /**
+     * Display the login page.
+     */
     public function login()
     {
         $view = new View('Connexion');
         $view->render('login');
     }
 
+    /**
+     * Display the registration page.
+     */
     public function register()
     {
         $view = new View('Inscription');
         $view->render('register');
     }
 
+    /**
+     * Handle user registration.
+     */
     public function createUser(): void
     {
         if (empty(trim($_POST['username'] ?? '')) || empty(trim($_POST['email'] ?? '')) || empty(trim($_POST['password'] ?? ''))) {
@@ -35,6 +44,9 @@ class AuthController
         exit;
     }
 
+    /**
+     * Handle user login verification.
+     */
     public function verifyLogin(): void
     {
         // Validate input
@@ -69,6 +81,9 @@ class AuthController
         exit;
     }
 
+    /**
+     * Handle user logout.
+     */
     public function logout(): void
     {
         // Destroy the session

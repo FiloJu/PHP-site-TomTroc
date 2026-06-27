@@ -9,6 +9,9 @@ use Views\View;
 
 class MessageController
 {
+    /**
+     * Display the message inbox.
+     */
     public function index(): void
     {
         $userId = $_SESSION['user_id'] ?? null;
@@ -62,6 +65,9 @@ class MessageController
         ]);
     }
 
+    /**
+     * Create a new message.
+     */
     public function create(array $data = []): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

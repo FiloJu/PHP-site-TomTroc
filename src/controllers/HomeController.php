@@ -7,6 +7,9 @@ use Models\Managers\BookManager;
 
 class HomeController
 {
+    /**
+     * Display the home page with the latest books.
+     */
     public function index()
     {
         $logged_in = $_SESSION['auth'] ?? false;

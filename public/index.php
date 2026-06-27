@@ -56,7 +56,7 @@ try {
             'method' => 'findAll',
         ]),
         new Route([
-            'action' => 'exchange',
+            'action' => 'searchBook',
             'controller' => BookController::class,
             'method' => 'findAll',
         ]),

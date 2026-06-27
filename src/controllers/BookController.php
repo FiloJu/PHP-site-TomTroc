@@ -10,6 +10,9 @@ use Exception;
 
 class BookController
 {
+    /**
+     * Display all books or search results.
+     */
     public function findAll(): void
     {
         $bookManager = new BookManager();
@@ -37,6 +40,9 @@ class BookController
         $view->render('books', ['books' => $books, 'users' => $users]);
     }
 
+    /**
+     * Display a single book's details.
+     */
     public function findOne(int $id)
     {
         $manager = new BookManager();
@@ -55,6 +61,9 @@ class BookController
         $view->render('book', ['book' => $book, 'owner' => $owner, 'currentUserId' => $currentUserId]);
     }
 
+    /**
+     * Create a new book.
+     */
     public function create(array $data = []): void
     {
         // Récupérer les données POST si c'est une requête POST
@@ -86,6 +95,9 @@ class BookController
         $view->render('createBook');
     }
 
+    /**
+     * Edit an existing book.
+     */
     public function edit(int $id): void
     {
         $manager = new BookManager();
@@ -156,6 +168,9 @@ class BookController
         $view->render('updateBook', ['book' => $book]);
     }
 
+    /**
+     * Delete a book.
+     */
     public function delete(int $id): void
     {
         // Check if user is logged in

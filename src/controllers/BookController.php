@@ -11,7 +11,18 @@ use Exception;
 class BookController
 {
     /**
-     * Display all books or search results.
+     * Retrieves and displays all books from the database, or filters books by search query if provided.
+     * For each book, it fetches the associated user information (book owner) to display user details.
+     * The method handles search functionality via GET parameter 'search'.
+     *
+     * @return void Renders the 'books' view with books and their corresponding owners
+     *
+     * @throws Exception If database operations fail
+     *
+     * @uses BookManager::findAll() To retrieve all books
+     * @uses BookManager::searchByTitle() To search books by title
+     * @uses UserManager::findById() To fetch user information for each book owner
+     * @uses View::render() To display the books list template
      */
     public function findAll(): void
     {
@@ -41,7 +52,19 @@ class BookController
     }
 
     /**
-     * Display a single book's details.
+     * Retrieves and displays a specific book by its ID. Also fetches the owner's information
+     * and passes the current user's ID to the view to determine if edit/delete actions are available.
+     * If the book is not found, throws an Exception with a 404 status code.
+     *
+     * @param int $id The ID of the book to display
+     *
+     * @return void Renders the 'book' view with book details, owner info, and current user ID
+     *
+     * @throws Exception Throws exception with status code 404 if book is not found
+     *
+     * @uses BookManager::findOne() To retrieve the specific book
+     * @uses UserManager::findById() To fetch the book owner's information
+     * @uses View::render() To display the book details template
      */
     public function findOne(int $id)
     {
@@ -62,7 +85,20 @@ class BookController
     }
 
     /**
-     * Create a new book.
+     * Handles both GET and POST requests. On GET request, displays the book creation form.
+     * On POST request, validates the submitted data (title and author are mandatory),
+     * processes the book creation, and redirects to the newly created book's detail page.
+     * The current user is automatically set as the book owner, and new books are marked as available by default.
+     * Optional fields like description and image are trimmed and set to null if empty.
+     *
+     * @param array $data Optional array of book data (typically from POST request)
+     *
+     * @return void Renders the 'createBook' view on GET request, or redirects to created book on successful POST
+     *
+     * @throws Exception Throws exception with status 400 if required fields (title, author) are missing
+     *
+     * @uses BookManager::create() To save the new book to the database
+     * @uses View::render() To display the book creation form template
      */
     public function create(array $data = []): void
     {
@@ -96,7 +132,22 @@ class BookController
     }
 
     /**
-     * Edit an existing book.
+     * Handles both GET and POST requests for editing a book. On GET request, displays the edit form.
+     * On POST request, updates the book with new data including title, author, description, and availability status.
+     * Supports image upload functionality: validates file type (jpg, jpeg, png), stores the new image,
+     * and deletes the old image if a new one is uploaded.
+     * Only the book owner (current user) can edit the book. Unauthorized access redirects to the books list.
+     * If validation fails, stores error message and old inputs in session for user-friendly error handling.
+     *
+     * @param int $id The ID of the book to edit
+     *
+     * @return void Renders the 'updateBook' view on GET request, or redirects after successful update on POST
+     *
+     * @throws Exception If book not found or user is not authorized
+     *
+     * @uses BookManager::findOne() To retrieve the book to edit
+     * @uses BookManager::update() To save updated book data
+     * @uses View::render() To display the book edit form template
      */
     public function edit(int $id): void
     {
@@ -118,7 +169,8 @@ class BookController
             $author = trim($_POST['author'] ?? '');
             $description = trim($_POST['description'] ?? '');
             $available = $_POST['available'] ?? '1';
-            $image = $book->getImage();
+            $currentImage = $book->getImage();
+            $image = $currentImage;
 
             if (!empty($_FILES['image_file']['tmp_name']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
                 $tmpFile = $_FILES['image_file']['tmp_name'];
@@ -131,8 +183,15 @@ class BookController
                     if (!is_dir(dirname($destination))) {
                         mkdir(dirname($destination), 0755, true);
                     }
-                    move_uploaded_file($tmpFile, $destination);
-                    $image = $imageName;
+                    if (move_uploaded_file($tmpFile, $destination)) {
+                        $image = $imageName;
+                        if (!empty($currentImage)) {
+                            $oldImagePath = __DIR__ . '/../../public/img/books/' . $currentImage;
+                            if (is_file($oldImagePath)) {
+                                unlink($oldImagePath);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -169,7 +228,19 @@ class BookController
     }
 
     /**
-     * Delete a book.
+     * Removes a book from the database. Includes security checks: ensures user is logged in
+     * and verifies that the current user is the book owner before allowing deletion.
+     * Unauthorized attempts (not logged in or not the owner) redirect to the books list.
+     * After successful deletion, redirects to the books list page.
+     *
+     * @param int $id The ID of the book to delete
+     *
+     * @return void Redirects to books list after successful deletion or on authorization failure
+     *
+     * @throws Exception If book not found or user is not authorized
+     *
+     * @uses BookManager::findOne() To retrieve the book to verify ownership
+     * @uses BookManager::delete() To remove the book from the database
      */
     public function delete(int $id): void
     {

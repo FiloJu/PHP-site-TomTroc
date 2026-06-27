@@ -23,29 +23,29 @@
     <h2 class="section-title">Les derniers livres ajoutés</h2>
 
     <div class="books-list">
-        <?php if (isset($books) && !empty($books)) : ?>
-            <?php foreach ($books as $book) : ?>
-                <a href="index.php?action=book&id=<?= $book->getId() ?>" class="book">
-                    <div class="book-cover">
-                        <img src="img/books/<?= htmlspecialchars($book->getImage() ?: 'default_book.png') ?>"
-                            alt="<?= htmlspecialchars($book->getTitle()) ?>"
-                            class="image">
-                    </div>
+        <?php if (isset($books) && !empty($books)): ?>
+                <?php foreach ($books as $book): ?>
+                        <a href="index.php?action=book&id=<?= $book->getId() ?>" class="book">
+                            <div class="book-cover">
+                                <img src="img/books/<?= htmlspecialchars($book->getImage() ?: 'default_book.png') ?>"
+                                    alt="<?= htmlspecialchars($book->getTitle()) ?>"
+                                    class="image">
+                            </div>
 
-                    <div class="book-details">
-                        <h3 class="book-title"><?= htmlspecialchars($book->getTitle()) ?></h3>
-                        <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
-                        <?php
-                            $userManager = new \Models\Managers\UserManager();
-                            $seller = $userManager->findById($book->getUserId());
-                            $sellerName = $seller ? $seller->getUsername() : 'Inconnu';
-                        ?>
-                        <p class="book-seller">Vendu par : <?= htmlspecialchars($sellerName) ?></p>
-                    </div>
-                </a>
-            <?php endforeach; ?>
-        <?php else : ?>
-            <p>Aucun livre disponible.</p>
+                            <div class="book-details">
+                                <h3 class="book-title"><?= htmlspecialchars($book->getTitle()) ?></h3>
+                                <p class="book-author"><?= htmlspecialchars($book->getAuthor()) ?></p>
+                                <?php
+                                $userManager = new \Models\Managers\UserManager();
+                                $seller = $userManager->findById($book->getUserId());
+                                $sellerName = $seller ? $seller->getUsername() : 'Inconnu';
+                                ?>
+                                <p class="book-seller">Vendu par : <?= htmlspecialchars($sellerName) ?></p>
+                            </div>
+                        </a>
+                <?php endforeach; ?>
+        <?php else: ?>
+                <p>Aucun livre disponible.</p>
         <?php endif; ?>
     </div>
 

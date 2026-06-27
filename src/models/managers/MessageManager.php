@@ -23,7 +23,7 @@ class MessageManager extends AbstractEntityManager
             'is_read' => $data['is_read'] ?? 0,
             'created_at' => date('Y-m-d H:i:s')
         ]);
-        return (int)$this->db->lastInsertId();
+        return (int) $this->db->lastInsertId();
     }
 
     /**
@@ -51,7 +51,7 @@ class MessageManager extends AbstractEntityManager
 
         $conversations = [];
         foreach ($rows as $row) {
-            $otherUserId = (int)$row['other_user_id'];
+            $otherUserId = (int) $row['other_user_id'];
             if (!isset($conversations[$otherUserId])) {
                 $conversations[$otherUserId] = [
                     'id' => $otherUserId,
@@ -59,8 +59,8 @@ class MessageManager extends AbstractEntityManager
                     'other_avatar' => $row['other_avatar'] ?? 'Avatar_default.png',
                     'last_message' => $row['last_message'] ?? '',
                     'last_message_date' => $row['last_message_date'] ?? null,
-                    'last_message_read' => (int)$row['last_message_read'],
-                    'last_message_sender_id' => (int)$row['last_message_sender_id'],
+                    'last_message_read' => (int) $row['last_message_read'],
+                    'last_message_sender_id' => (int) $row['last_message_sender_id'],
                 ];
             }
         }
@@ -107,11 +107,11 @@ class MessageManager extends AbstractEntityManager
         foreach ($rows as $row) {
             $messages[] = [
                 'id' => $row['id'],
-                'sender_id' => (int)$row['sender_id'],
-                'receiver_id' => (int)$row['receiver_id'],
+                'sender_id' => (int) $row['sender_id'],
+                'receiver_id' => (int) $row['receiver_id'],
                 'sender_username' => $row['sender_username'] ?? 'Utilisateur',
                 'content' => $row['content'],
-                'is_read' => (int)$row['is_read'],
+                'is_read' => (int) $row['is_read'],
                 'created_at' => $row['created_at'],
             ];
             if ($otherUser['username'] === null && $row['other_username'] !== null) {

@@ -38,7 +38,7 @@ class MessageController
         $otherUserAvatar = null;
 
         if ($otherUserId) {
-            $data = $manager->findConversationBetween((int)$userId, $otherUserId);
+            $data = $manager->findConversationBetween((int) $userId, $otherUserId);
             $selectedConversationId = $otherUserId;
             $messages = $data['messages'];
             $otherUserPseudo = $data['other_user']['username'] ?? 'Utilisateur';

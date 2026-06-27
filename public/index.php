@@ -172,18 +172,18 @@ try {
     ]);
     $router->errorRoutes([
         new Route([
-            'action' => '403', 
-            'controller' => ErrorsController::class, 
+            'action' => '403',
+            'controller' => ErrorsController::class,
             'method' => 'error403'
         ]),
         new Route([
-            'action' => '404', 
-            'controller' => ErrorsController::class, 
+            'action' => '404',
+            'controller' => ErrorsController::class,
             'method' => 'error404'
         ]),
         new Route([
-            'action' => '400', 
-            'controller' => ErrorsController::class, 
+            'action' => '400',
+            'controller' => ErrorsController::class,
             'method' => 'error400'
         ]),
     ]);

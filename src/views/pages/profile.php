@@ -75,40 +75,40 @@ use Services\Utils;
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (empty($books)) : ?>
-                        <tr>
-                            <td colspan="6" class="empty-state">Votre bibliothèque est vide.</td>
-                        </tr>
-                    <?php else : ?>
-                        <?php foreach ($books as $book) : ?>
+                    <?php if (empty($books)): ?>
                             <tr>
-                                <td>
-                                    <div class="table-img-frame">
-                                        <img src="img/books/<?= htmlspecialchars($book->getImage() ?: 'default_book.png') ?>" alt="Cover">
-                                    </div>
-                                </td>
-                                <td class="table-text-bold"><?= htmlspecialchars($book->getTitle()) ?></td>
-                                <td class="table-text-light"><?= htmlspecialchars($book->getAuthor()) ?></td>
-                                <td class="table-text-desc">
-                                    <div class="text-truncate-wrapper">
-                                        <?= htmlspecialchars($book->getDescription() ?? ''); ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <?php if (!$book->getIsAvailable()) : ?>
-                                        <span class="badge-not-avalaible">non dispo.</span>
-                                    <?php else : ?>
-                                        <span class="badge-disponible">disponible</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td class="table-actions">
-                                    <a href="index.php?action=editBook&id=<?= $book->getId() ?>" class="action-edit">Éditer</a>
-                                    <form action="index.php?action=deleteBook&id=<?= $book->getId() ?>" method="POST" style="display:inline">
-                                        <button type="submit" class="action-delete" style=".action-delete">Supprimer</button>
-                                    </form>
-                                </td>
+                                <td colspan="6" class="empty-state">Votre bibliothèque est vide.</td>
                             </tr>
-                        <?php endforeach; ?>
+                    <?php else: ?>
+                            <?php foreach ($books as $book): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="table-img-frame">
+                                                <img src="img/books/<?= htmlspecialchars($book->getImage() ?: 'default_book.png') ?>" alt="Cover">
+                                            </div>
+                                        </td>
+                                        <td class="table-text-bold"><?= htmlspecialchars($book->getTitle()) ?></td>
+                                        <td class="table-text-light"><?= htmlspecialchars($book->getAuthor()) ?></td>
+                                        <td class="table-text-desc">
+                                            <div class="text-truncate-wrapper">
+                                                <?= htmlspecialchars($book->getDescription() ?? ''); ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <?php if (!$book->getIsAvailable()): ?>
+                                                    <span class="badge-not-avalaible">non dispo.</span>
+                                            <?php else: ?>
+                                                    <span class="badge-disponible">disponible</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="table-actions">
+                                            <a href="index.php?action=editBook&id=<?= $book->getId() ?>" class="action-edit">Éditer</a>
+                                            <form action="index.php?action=deleteBook&id=<?= $book->getId() ?>" method="POST" style="display:inline">
+                                                <button type="submit" class="action-delete" style=".action-delete">Supprimer</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                            <?php endforeach; ?>
                     <?php endif; ?>
                 </tbody>
             </table>

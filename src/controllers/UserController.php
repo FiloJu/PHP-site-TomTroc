@@ -28,7 +28,7 @@ class UserController
         $userId = $this->checkAuthorisation();
 
         $userManager = new UserManager();
-        $user = $userManager->findById((int)$userId);
+        $user = $userManager->findById((int) $userId);
 
         if (!$user) {
             header('Location: index.php?action=login');
@@ -36,7 +36,7 @@ class UserController
         }
 
         $bookManager = new BookManager();
-        $books = $bookManager->findByUserId((int)$userId);
+        $books = $bookManager->findByUserId((int) $userId);
 
         $view = new View('Mon compte');
         $view->render('profile', [

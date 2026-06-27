@@ -8,7 +8,7 @@ use PDOStatement;
 require_once '../config/database.php';
 class Database
 {
-// Singleton pattern to ensure only one connection is created - one and only one instance of PDO is used throughout the application
+    // Singleton pattern to ensure only one connection is created - one and only one instance of PDO is used throughout the application
     private static $instance = null;
 
     private $db;

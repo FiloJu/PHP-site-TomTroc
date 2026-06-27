@@ -9,7 +9,7 @@
     </div>
 
     <div class="banner-image">
-        <img src="img/books/book_hope.png" alt="author" class="image">
+        <img src="img/books/book_hope.jpg" alt="author" class="image">
 
         <div class="card">
             <span class="name">xxx</span>

@@ -153,12 +153,53 @@ img {
 
 .banner {
     background-color: var(--lightGray);
+    /* break-out to full viewport width while staying inside the container */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    padding: 80px 0 50px;
+    box-sizing: border-box;
+}
+
+.banner-inner {
+    width: 100%;
+    max-width: 1440px; /* same as .container */
+    margin: 0 auto;
+    padding: 0 150px; /* same side padding as .container */
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 80px;
-    padding-bottom: 50px;
     gap: 105px;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   SECTION STEPS - same full-bleed behavior as .banner
+   The background stretches to the viewport edges while content stays
+   constrained to the site container via .steps-inner
+========================================================================== */
+.steps {
+    background-color: var(--lightGray);
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+.steps-inner {
+    width: 100%;
+    max-width: 1440px; /* same as .container */
+    margin: 0 auto;
+    padding: 0 150px; /* same side padding as .container */
+    box-sizing: border-box;
 }
 
 .banner-content {
@@ -358,17 +399,26 @@ img {
 ========================================================================== */
 
 .values {
-    background-color: var(--lightGray);
+    background-color: transparent;
     padding-bottom: 20px;
 }
 
 .values-banner {
-    width: 100%;
+    /* full-bleed banner strip */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    height: 230px;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .values-banner img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
 }

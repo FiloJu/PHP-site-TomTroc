@@ -10,7 +10,7 @@
         <h1 class="edit-main-title">Nouveau message</h1>
 
         <div class="edit-card-white">
-            <?php if (!empty($error)): ?>
+            <?php if (!empty($error)) : ?>
                     <div class="form-error"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 

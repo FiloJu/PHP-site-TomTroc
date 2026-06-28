@@ -16,14 +16,14 @@
         </header>
 
         <section class="books-grid">
-            <?php if (isset($books) && !empty($books)): ?>
-                <?php foreach ($books as $book): ?>
+            <?php if (isset($books) && !empty($books)) : ?>
+                <?php foreach ($books as $book) : ?>
                     <article class="book-card">
                         <a href="index.php?action=book&id=<?= htmlspecialchars($book->getId()) ?>">
                             <div class="book-image">
                                 <img src="img/books/<?= htmlspecialchars($book->getImage() ?: 'default_book.png') ?>"
                                     alt="<?= htmlspecialchars($book->getTitle()) ?>">
-                                <?php if ($book->getIsAvailable() === false): ?>
+                                <?php if ($book->getIsAvailable() === false) : ?>
                                     <span class="badge-non-disponible">non dispo.</span>
                                 <?php endif; ?>
                             </div>
@@ -40,7 +40,7 @@
                         </a>
                     </article>
                 <?php endforeach; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <div class="no-results">
                     <p>Désolé, aucun livre ne correspond à votre recherche
                         "<strong><?= htmlspecialchars($_GET['search'] ?? '') ?></strong>".</p>

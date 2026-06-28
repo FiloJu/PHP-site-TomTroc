@@ -80,12 +80,12 @@ use Services\Utils;
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (empty($books)): ?>
+                    <?php if (empty($books)) : ?>
                         <tr>
                             <td colspan="6" class="empty-state">Votre bibliothèque est vide.</td>
                         </tr>
-                    <?php else: ?>
-                        <?php foreach ($books as $book): ?>
+                    <?php else : ?>
+                        <?php foreach ($books as $book) : ?>
                             <tr>
                                 <td>
                                     <div class="table-img-frame">
@@ -101,9 +101,9 @@ use Services\Utils;
                                     </div>
                                 </td>
                                 <td>
-                                    <?php if (!$book->getIsAvailable()): ?>
+                                    <?php if (!$book->getIsAvailable()) : ?>
                                         <span class="badge-not-avalaible">non dispo.</span>
-                                    <?php else: ?>
+                                    <?php else : ?>
                                         <span class="badge-disponible">disponible</span>
                                     <?php endif; ?>
                                 </td>

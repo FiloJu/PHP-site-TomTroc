@@ -75,6 +75,12 @@ Importer le fichier SQL dans votre base de données :
 mysql -u root -p tomtroc < database.sql
 ```
 
+J'ai généré un fichier de données d’amorçage supplémentaire, vous pouvez aussi l’importer ainsi :
+
+```bash
+mysql -u root -p tomtroc < seed_data.sql
+```
+
 Remplacez `root` et `tomtroc` par votre utilisateur et nom de base de données si nécessaire.
 
 ## Déploiement local

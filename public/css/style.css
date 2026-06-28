@@ -423,6 +423,23 @@ img {
     object-fit: cover;
 }
 
+/* Responsive tweaks for smaller screens */
+@media (max-width: 768px) {
+    .values-banner {
+        height: 150px;
+    }
+
+    .banner {
+        padding: 40px 0 30px;
+    }
+
+    .banner-inner,
+    .steps-inner {
+        padding: 0 20px;
+        gap: 30px;
+    }
+}
+
 .values-content {
     width: 100%;
     max-width: 392px;
@@ -805,7 +822,11 @@ img {
 }
 
 .book-page-wrapper .container {
-    padding-top: 16px;
+    padding-top: 0;
+}
+
+.book-page-wrapper .container {
+    padding-top: 0;
     background-color: transparent !important;
     max-width: 100%;
     width: 100%;
@@ -974,7 +995,7 @@ img {
 /* --- Mise en page globale --- */
 .profile-page-wrapper {
     background-color: #FAF9F7;
-    padding-top: 103px;
+    padding-top: 90px;
     padding-bottom: 214px;
     min-height: 100vh;
     box-sizing: border-box;
@@ -1738,7 +1759,7 @@ img {
 
 /* --- Badges Disponibilité --- */
 .badge-disponible {
-    background-color: #6DC5A1;
+    background-color: #0E7D5F;
     color: #FFFFFF;
     padding: 3.7px 13.31px;
     border-radius: 29.58px;
@@ -1750,7 +1771,7 @@ img {
 }
 
 .badge-not-avalaible {
-    background-color: #C56D6D;
+    background-color: #CB2D2D;
     color: #FFFFFF;
     padding: 3.7px 13.31px;
     border-radius: 29.58px;
@@ -1774,7 +1795,15 @@ img {
 }
 
 .action-delete {
-    color: #C56D6D;
+    color: #CB2D2D;
+    text-decoration: underline solid;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
 }
 
 /* --- Zone Danger --- */
@@ -1813,9 +1842,11 @@ img {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    padding-top: 90px;
     padding-left: 160px;
     /* Alignement logo */
     padding-right: 120px;
+    box-sizing: border-box;
 }
 
 .messagerie-container {

@@ -1,4 +1,4 @@
-<main class="main-auth">
+<div class="main-auth">
     <div class="auth">
         <div class="auth-left">
             <h1 class="sign-title">Inscription</h1>
@@ -29,4 +29,4 @@
 
         <img src="img/books/image_inscription.jpg" class="auth-img" alt="Bibliothèque">
     </div>
-</main>
+</div>

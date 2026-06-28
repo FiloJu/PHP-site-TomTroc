@@ -13,7 +13,7 @@
             <form method="POST" action="index.php?action=create-book">
                 <div class="edit-columns-flex">
                 <div class="edit-col-left-photo">
-                    <label class="edit-label-light" for="image">Photo du livre</label>
+                    <p class="edit-label-light">Photo du livre</p>
                     <div class="edit-image-frame">
                         <img src="img/books/default_book.png" alt="Couverture du livre">
                     </div>

@@ -1,4 +1,4 @@
-<main class="messagerie-page-wrapper">
+<section class="messagerie-page-wrapper">
     <div class="messagerie-container">
 
         <div class="messagerie-sidebar">
@@ -95,4 +95,4 @@
         </section>
 
     </div>
-</main>
+</section>

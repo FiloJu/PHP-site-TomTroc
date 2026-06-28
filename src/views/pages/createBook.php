@@ -30,10 +30,6 @@
                         <input type="text" id="author" name="author" required>
                     </div>
                     <div class="edit-form-group">
-                        <label class="edit-label-light" for="image">URL de l'image</label>
-                        <input type="text" id="image" name="image">
-                    </div>
-                    <div class="edit-form-group">
                         <label class="edit-label-light" for="description">Description</label>
                         <textarea id="description" name="description"></textarea>
                     </div>

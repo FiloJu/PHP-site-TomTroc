@@ -10,7 +10,7 @@ class User extends AbstractEntity
     private string $username;
     private string $email;
     private string $password;
-    private ?string $avatar = 'avatar_default.png';
+    private ?string $avatar = 'Avatar_default.png';
     private DateTime $created_at;
     public function setUsername(string $username): void
     {
@@ -26,7 +26,7 @@ class User extends AbstractEntity
     }
     public function setAvatar(?string $avatar): void
     {
-        $this->avatar = Utils::trim($avatar);
+        $this->avatar = Utils::trim($avatar) ?: 'Avatar_default.png';
     }
     public function setCreatedAt($created_at): void
     {
@@ -56,7 +56,13 @@ class User extends AbstractEntity
     }
     public function getAvatar(): ?string
     {
-        return $this->avatar;
+        $avatar = Utils::trim($this->avatar);
+
+        if ($avatar === '' || strtolower($avatar) === 'avatar_default.png') {
+            return 'Avatar_default.png';
+        }
+
+        return $avatar;
     }
     public function getCreatedAt(): DateTime
     {

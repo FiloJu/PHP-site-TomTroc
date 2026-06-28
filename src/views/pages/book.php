@@ -21,7 +21,7 @@
                     <div class="section-owner">Propriétaire</div>
                     <div class="owner-card">
                         <div class="avatar-wrapper">
-                            <img src="img/avatars/<?= htmlspecialchars($owner?->getAvatar() ?? 'Avatar_default.png') ?>"  alt="Avatar propriétaire" class="owner-avatar-img">
+                            <img src="img/avatars/<?= htmlspecialchars($owner?->getAvatar() ?: 'Avatar_default.png') ?>"  alt="Avatar propriétaire" class="owner-avatar-img">
                         </div>
                         <div class="owner-name-container">
                             <a href="index.php?action=publicProfile&id=<?= htmlspecialchars($owner?->getId()) ?>">

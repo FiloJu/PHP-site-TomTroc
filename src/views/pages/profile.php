@@ -19,7 +19,7 @@ use Services\Utils;
 
                 <div class="profile-col-left">
                     <div class="profile-avatar-frame">
-                        <img src="img/avatars/<?= htmlspecialchars($user->getAvatar() ?? 'avatar_default.png') ?>" alt="Avatar de profil" id="avatar-preview">
+                        <img src="img/avatars/<?= htmlspecialchars($user->getAvatar() ?? 'Avatar_default.png') ?>" alt="Avatar de profil" id="avatar-preview">
                     </div>
 
                     <label for="avatar_upload" class="edit-avatar-link">modifier</label>

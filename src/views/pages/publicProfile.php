@@ -7,7 +7,7 @@ use Services\Utils;
         <div class="profile-sidebar">
             <div class="profile-card">
                 <div class="profile-avatar">
-                    <img src="img/avatars/<?= htmlspecialchars($user->getAvatar()) ?>"
+                    <img src="img/avatars/<?= htmlspecialchars($user->getAvatar() ?: 'Avatar_default.png') ?>"
                         alt="Avatar de <?= htmlspecialchars($user->getUsername()) ?>">
                 </div>
 

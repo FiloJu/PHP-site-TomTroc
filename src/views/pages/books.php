@@ -4,7 +4,7 @@
             <h1 class="page-title">Nos livres à l’échange</h1>
             <div class="search-bar">
                 <form action="index.php" method="GET">
-                    <input type="hidden" name="action" value="exchange">
+                    <input type="hidden" name="action" value="books">
                     <div class="search-section">
                         <label for="search-input" class="visually-hidden">Rechercher un titre par son titre</label>
                         <img src="/img/min/search.png" alt="">
@@ -44,7 +44,7 @@
                 <div class="no-results">
                     <p>Désolé, aucun livre ne correspond à votre recherche
                         "<strong><?= htmlspecialchars($_GET['search'] ?? '') ?></strong>".</p>
-                    <a href="index.php?action=exchange" class="btn-back">Voir tous les livres</a>
+                    <a href="index.php?action=books" class="btn-back">Voir tous les livres</a>
                 </div>
             <?php endif; ?>
         </section>
